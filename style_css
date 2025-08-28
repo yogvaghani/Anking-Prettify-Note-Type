@@ -1,679 +1,609 @@
-/* old card background: #cfd6d8 */
+/*
+================================================================================
+AnKing Prettify - Multi-Theme Framework (Full Version with Custom Background)
+================================================================================
+*/
 
-/* --- General Reset for Anki Webview --- */
-html, body {
-  height: 100%; 
+
+/* --- General Reset & Layout Fix --- */
+html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; 
-  box-sizing: border-box; /* Apply border-box globally */
+  overflow: hidden;
+  box-sizing: border-box;
+}
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 *, *::before, *::after {
-  box-sizing: inherit; /* Ensure all elements inherit border-box */
+  box-sizing: inherit;
 }
 
-html {
-  min-height: 100vh; 
-  background-color: var(--window-bg-light); /* Fallback */
-  background-image: var(--window-sky-gradient-light); 
-  background-attachment: fixed; 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 0 0; /* Explicitly set position */
+/*
+================================================================================
+I.   COLOR PALETTE
+================================================================================
+*/
+:root {
+  /* --- PALETTE: OCEAN (Teal/Deep Blue) --- */
+  --p-hue-bg: 180; --p-hue-accent: 200;
+  --p-bg-s: 40%; --p-bg-l: 92%; --p-bg-l-dark: 11%;
+  --p-accent-s: 55%; --p-accent-l: 50%; --p-accent-l-dark: 65%;
+  --p-text-s: 25%; --p-text-l: 22%; --p-text-l-dark: 88%;
+  --p-bold-fg: #FF7F50; --p-italic-fg: #6A5ACD; --p-underline-fg: #20B2AA; --p-bold-italic-fg: #CD5C5C;
+  --p-bold-fg-dark: #FFA07A; --p-italic-fg-dark: #DA70D6; /* MODIFIED: Brighter purple for readability */ --p-underline-fg-dark: #48D1CC; --p-bold-italic-fg-dark: #F08080;
+}
+/*
+================================================================================
+II.  MASTER VARIABLE ASSIGNMENT & CORE STYLES
+================================================================================
+*/
+:root {
+  /* Base Layout & Font */
+  --card-max-width: 100em; --font-family: "Rubik", "Inter", -apple-system, system-ui, "SF Pro", sans-serif;
+  --font-family-serif: "Merriweather", "Georgia", serif; --font-family-mono: "Fira Code", "Courier New", monospace;
+  --base-border-radius: 1.25em;
+
+  /* Light Mode Variables */
+  --c-text-primary-light: hsl(var(--p-hue-bg), var(--p-text-s), var(--p-text-l)); --c-text-secondary-light: hsl(var(--p-hue-bg), calc(var(--p-text-s) - 5%), calc(var(--p-text-l) + 20%));
+  --c-accent-1-light: hsl(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l)); --c-accent-2-light: hsl(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l) - 10%));
+  --c-divider-light: hsl(var(--p-hue-bg), calc(var(--p-bg-s) - 10%), calc(var(--p-bg-l) - 10%));
+
+  /* Dark Mode Variables -- MODIFIED FOR READABILITY */
+  --c-text-primary-dark: hsl(var(--p-hue-bg), 15%, 95%); /* Brighter primary text */
+  --c-text-secondary-dark: hsl(var(--p-hue-bg), 10%, 80%); /* Brighter secondary text */
+  --c-accent-1-dark: hsl(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l-dark)); --c-accent-2-dark: hsl(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l-dark) - 10%));
+  --c-divider-dark: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 15%));
+
+  /* Abstracted Variables for CSS rules to use */
+  --text-primary: var(--c-text-primary-light); --text-secondary: var(--c-text-secondary-light);
+  --accent-1: var(--c-accent-1-light); --accent-2: var(--c-accent-2-light); --divider: var(--c-divider-light);
+  --bold-fg: var(--p-bold-fg); --italic-fg: var(--p-italic-fg); --underline-fg: var(--p-underline-fg); --bold-italic-fg: var(--p-bold-italic-fg);
+}
+
+/* === MODIFICATION: Background Image & Full Screen Fix === */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background-color: transparent; 
-  display: flex; 
-  flex-direction: column;
-  min-height: 100vh; /* Ensure body also tries to fill viewport */
+  /* ===  background-image: url('lighthouse_background.jpg'); ===*/
+	background-image: url('starsky.jpeg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-/* Apply night mode background */
-body.night_mode { 
-  background-color: var(--window-bg-dark) !important; 
-  background-image: var(--window-sky-gradient-dark) !important;
-  background-attachment: fixed !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: 0 0 !important; /* Explicitly set position */
+body.night_mode {
+  /* This section applies the dark mode text colors */
+  --text-primary: var(--c-text-primary-dark);
+  --text-secondary: var(--c-text-secondary-dark);
+  --accent-1: var(--c-accent-1-dark);
+  --accent-2: var(--c-accent-2-dark);
+  --divider: var(--c-divider-dark);
+  --bold-fg: var(--p-bold-fg-dark);
+  --italic-fg: var(--p-italic-fg-dark);
+  --underline-fg: var(--p-underline-fg-dark);
+  --bold-italic-fg: var(--p-bold-italic-fg-dark);
 }
-
-html.night_mode { 
-  background-color: var(--window-bg-dark) !important;
-  background-image: var(--window-sky-gradient-dark) !important;
-  background-attachment: fixed !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: 0 0 !important; /* Explicitly set position */
-}
+/* === END MODIFICATION === */
 
 
-/* -------------------------------------------------- PREFERENCES */
-:root {
-  --card-max-width: 40em; /* As per user's adjustment */
-  --card-text-align: center; 
-  --font-size-regular: 18px;
-  --font-size-small: 14px;
-  --font-size-mobile: 21px; 
-  --font-family: "Rubik", "Inter", -apple-system, system-ui, BlinkMacSystemFont, "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; 
-  --img-width: 60%; /* Default max-width for images on desktop */
-  --img-brightness: 1;
-  --img-filter: none;
-
-  /* --- COOL PASTEL COLOR PALETTE (SHARED ACROSS THEMES) --- */
-  /* --- Light Mode Base Colors --- */
-  --window-bg-light: #eaf2f8; 
-  --card-bg-light-opaque: #f7f9fc; 
-  --card-bg-light-transparent: rgba(247, 249, 252, 0.70); 
-  --text-color-light: #34495e; 
-  --text-fg-faint-light: #7f8c8d;    
-  --text-bg-selected-light: #d4e6f1; 
-  --divider-light: #bdc3c7;         
-
-  /* --- Light Mode Accent Colors --- */
-  --primary-accent-light: #5dade2;   
-  --active-accent-light: #3498db;    
-  --secondary-accent-light: #5dade2; 
-  
-  /* --- MODIFIED: Light Mode VIBRANT Semantic Highlighting --- */
-  --bold-fg-light: #f39c12;          /* Vibrant Orange */
-  --italic-fg-light: #e91e63;        /* Vibrant Deep Pink/Magenta */
-  --underline-fg-light: #2ecc71;     /* Vibrant Emerald Green */
-  --bold-italic-fg-light: #d35400;   /* Burnt Orange for Bold+Italic */
-
-
-  --tag-fg-light: var(--text-fg-faint-light);
-  --tag-bg-light: #ecf0f1; 
-  --tag-border-light: var(--divider-light);
-  --tag-bg-hover-light: #d6eaf8; 
-  --tag-fg-active-light: var(--active-accent-light); 
-  --tag-border-active-light: var(--primary-accent-light);
-
-  /* --- Dark Mode Base Colors --- */
-  --window-bg-dark: #10101a; 
-  --card-bg-dark-opaque: #283747; 
-  --card-bg-dark-transparent: rgba(40, 55, 71, 0.70); 
-  --text-color-dark: #ecf0f1; 
-  --text-fg-faint-dark: #95a5a6;    
-  --text-bg-selected-dark: #34495e; 
-  --divider-dark: #4a6572;          
-
-  /* --- Dark Mode Accent Colors --- */
-  --primary-accent-dark: #85c1e9;   
-  --active-accent-dark: #5dade2;     
-  --secondary-accent-dark: #a9cce3;   
-
-  /* --- MODIFIED: Dark Mode BRIGHT Semantic Highlighting --- */
-  --bold-fg-dark: #f1c40f;           /* Bright Sun Flower Yellow */
-  --italic-fg-dark: #ff57a6;         /* Bright Pink */
-  --underline-fg-dark: #58d68d;      /* Bright Light Emerald Green */
-  --bold-italic-fg-dark: #e67e22;    /* Carrot Orange for Bold+Italic */
-  
-  --tag-fg-dark: var(--text-fg-faint-dark);
-  --tag-bg-dark: #34495e; 
-  --tag-border-dark: var(--divider-dark);
-  --tag-bg-hover-dark: #4a6572; 
-  --tag-fg-active-dark: var(--active-accent-dark);
-  --tag-border-active-dark: var(--primary-accent-dark);
-
-  /* --- THEME-SPECIFIC SHADOWS & EFFECTS --- */
-  /* Fluent Shadows (Used by theme-neumorphic-fluent) - Enhanced */
-  --fluent-shadow-light: 0 10px 25px rgba(108, 122, 137, 0.2), 0 5px 10px rgba(108, 122, 137, 0.15); 
-  --fluent-shadow-dark: 0 10px 25px rgba(0, 0, 0, 0.4), 0 5px 10px rgba(0, 0, 0, 0.3);
-  
-  /* Neumorphic Shadows (Used by theme-neumorphic-fluent) - Enhanced */
-  --neumorphic-shadow-light-outer-strong: #c8cfd4; 
-  --neumorphic-shadow-light-outer-soft: #ffffff;   
-  --neumorphic-shadow-light-inner-strong: #c8cfd4;
-  --neumorphic-shadow-light-inner-soft: #ffffff;
-  --neumorphic-shadow-dark-outer-strong: #1a242e; 
-  --neumorphic-shadow-dark-outer-soft: #364a5e;   
-  --neumorphic-shadow-dark-inner-strong: #1a242e;
-  --neumorphic-shadow-dark-inner-soft: #364a5e;
-
-  /* Glassmorphism Variables (Used by theme-glassmorphism) */
-  --true-glass-bg-light: rgba(250, 250, 250, 0.50); 
-  --glass-border-light: rgba(200, 200, 200, 0.25);
-  --glass-shadow-light: 0 5px 20px rgba(0, 0, 0, 0.12);
-  --glass-text-light: #2c3e50; 
-  
-  --true-glass-bg-dark: rgba(30, 30, 30, 0.55); 
-  --glass-border-dark: rgba(200, 200, 200, 0.1); 
-  --glass-shadow-dark: 0 8px 25px rgba(0, 0, 0, 0.35);
-  --glass-text-dark: #f0f0f0; 
-
-  /* --- GRADIENTS FOR WINDOW BACKGROUND --- */
-  /* MODIFIED: More pronounced gradients */
-  --window-sky-gradient-light: linear-gradient(145deg, #f0f8ff 0%, #d6eaf8 30%, #a9cce3 60%, #7fb3d5 100%);  
-  --window-sky-gradient-dark: linear-gradient(160deg, #080a10 0%, #151e2d 40%, #2c3e50 70%, #3a506b 100%); 
-}
-
-/* -------------------------------------------------- GLOBAL CARD STYLES (Anki's .card div) */
-.card { 
-  background-color: transparent; 
-  color: var(--text-color-light); 
-  font-family: "Segoe UI", sans-serif; 
-  cursor: default;
-  padding: 1em; /* Consistent padding for the window area */
-  margin: 0;
-  width: 100%; /* Make .card take full width of its container (body) */
-  flex-grow: 1; 
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: flex-start; 
-  box-sizing: border-box;
-}
-
-.card.night_mode {
-  color: var(--text-color-dark); 
-}
-.card::-webkit-scrollbar {
-  display: none;
-}
-
-
-/* -------------------------------------------------- BASE FLASHCARD STYLING (Common to all themes) */
-.prettify-flashcard {
+.card {
+  color: var(--text-primary);
   font-family: var(--font-family);
-  font-size: var(--font-size-regular);
-  line-height: 1.8;
-  padding: 2em; /* Desktop internal padding */
-  margin: 1em auto; /* Consistent top/bottom margin for desktop, auto for L/R centering */
-  width: 100%; /* Will be constrained by .card's padding and its own max-width */
-  max-width: var(--card-max-width); 
-  text-align: var(--card-text-align);
-  word-wrap: break-word;
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; 
-  box-sizing: border-box; 
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; 
-  will-change: transform; 
-  transform: translateZ(0); 
-  overflow: hidden; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* MODIFIED: Add padding to respect iPhone safe areas (notch/home bar) */
+  padding-top: calc(1em + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(1em + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(1em + env(safe-area-inset-left, 0px));
+  padding-right: calc(1em + env(safe-area-inset-right, 0px));
 }
-/* Default text color for flashcard content */
-.card:not(.night_mode) .prettify-flashcard { color: var(--text-color-light); }
-.card.night_mode .prettify-flashcard { color: var(--text-color-dark); }
-
-.prettify-flashcard ::selection {
-  background-color: var(--text-bg-selected-light); 
-}
-.card.night_mode .prettify-flashcard ::selection {
-  background-color: var(--text-bg-selected-dark);
+.prettify-flashcard {
+  font-size: 20px; line-height: 1.8; padding: 2.25em; margin: 1em auto;
+  width: 100%; max-width: var(--card-max-width); text-align: center; word-wrap: break-word; color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform, box-shadow, background-color, border, backdrop-filter;
+  transform: translateZ(0);
+  overflow: visible;
+  position: relative; /* Needed for pseudo-elements */
 }
 
-/* Mobile base flashcard adjustments */
-.mobile .card { 
-  padding: 0.8em; 
+.prettify-flashcard ::selection { background-color: var(--accent-2); color: white; }
+.prettify-flashcard b, .prettify-flashcard strong { color: var(--bold-fg); }
+.prettify-flashcard i, .prettify-flashcard em { color: var(--italic-fg); font-style: italic; }
+.prettify-flashcard u { text-decoration-color: var(--underline-fg); color: var(--underline-fg); }
+.prettify-flashcard b > i, .prettify-flashcard i > b { color: var(--bold-italic-fg); }
+.prettify-flashcard .cloze { font-weight: bold; color: var(--accent-1); }
+a { color: var(--accent-1); text-decoration: none; }
+a:hover { color: var(--accent-2); text-decoration: underline;}
+.prettify-deck { color: var(--text-secondary); font-size: 0.8em; }
+.prettify-divider { border: none; border-bottom: 2px dashed var(--divider); margin: 1.5em; }
+
+/*
+================================================================================
+III.  THEME DEFINITIONS & THEME-AWARE BUTTONS
+================================================================================
+*/
+
+/* --- THEME: DEFAULT & FLUENT --- */
+.theme-default, .prettify-flashcard:not([class*="theme-"]), .theme-fluent {
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 3%), 0.8);
+  backdrop-filter: blur(10px) saturate(120%); -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border-radius: var(--base-border-radius); border: 1px solid var(--divider);
 }
-.mobile .prettify-flashcard {
-  padding: 1em;    
-  margin: 0;       
-  width: 100%;     
-  max-width: 100%; 
-  border-radius: 0.75em; 
+body.night_mode .theme-default, body.night_mode .prettify-flashcard:not([class*="theme-"]), body.night_mode .theme-fluent {
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 5%), 0.75);
+}
+.theme-default .cloze, .prettify-flashcard:not([class*="theme-"]) .cloze, .theme-fluent .cloze {
+  background-color: rgba(from var(--accent-1) r g b / 0.1); padding: 0.2em 0.6em; border-radius: 0.5em;
 }
 
-
-/* -------------------------------------------------- THEME: NEUMORPHIC-FLUENT -------------------------------------------------- */
-.theme-neumorphic-fluent {
-  background-color: var(--card-bg-light-transparent); 
-  backdrop-filter: blur(20px) saturate(160%); 
-  -webkit-backdrop-filter: blur(20px) saturate(160%); 
-  border-radius: 1em; 
-  border: 1px solid rgba(var(--text-color-light), 0.12); 
-  box-shadow: var(--fluent-shadow-light); 
+/* --- THEME: GLASSMORPHISM & GLASS-DEEP --- */
+.theme-glassmorphism, .theme-glass-deep {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(35px) saturate(160%); -webkit-backdrop-filter: blur(35px) saturate(160%);
+  border-radius: var(--base-border-radius); border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.3), 0 10px 30px rgba(0,0,0,0.15);
 }
-.card.night_mode .theme-neumorphic-fluent {
-  background-color: var(--card-bg-dark-transparent); 
-  border: 1px solid rgba(var(--text-color-dark), 0.12); 
-  box-shadow: var(--fluent-shadow-dark); 
-}
-/* Cloze for Neumorphic-Fluent theme - Enhanced shadows & Rounded */
-.theme-neumorphic-fluent .cloze {
-  background-color: var(--card-bg-light-opaque); 
-  color: var(--primary-accent-light);
-  border-radius: 0.65em; 
-  padding: 0.3em 0.7em; 
-}
-.card:not(.night_mode) .theme-neumorphic-fluent .cloze {
-  box-shadow: inset 3px 3px 7px var(--neumorphic-shadow-light-inner-strong), 
-              inset -3px -3px 7px var(--neumorphic-shadow-light-inner-soft);
-}
-.card.night_mode .theme-neumorphic-fluent .cloze {
-  background-color: var(--card-bg-dark-opaque);
-  color: var(--primary-accent-dark);
-  box-shadow: inset 3px 3px 7px var(--neumorphic-shadow-dark-inner-strong), 
-              inset -3px -3px 7px var(--neumorphic-shadow-dark-inner-soft);
-}
-/* Buttons for Neumorphic-Fluent theme - Enhanced shadows */
-.theme-neumorphic-fluent .button-general {
-  background-color: var(--card-bg-light-opaque); 
-}
-.card:not(.night_mode) .theme-neumorphic-fluent .button-general {
-  color: var(--text-color-light) !important; 
-  box-shadow: 5px 5px 10px var(--neumorphic-shadow-light-outer-strong), 
-              -5px -5px 10px var(--neumorphic-shadow-light-outer-soft);
-}
-.card:not(.night_mode) .theme-neumorphic-fluent .button-general:hover {
-  box-shadow: 6px 6px 12px var(--neumorphic-shadow-light-outer-strong), 
-              -6px -6px 12px var(--neumorphic-shadow-light-outer-soft);
-  color: var(--primary-accent-light) !important; 
-}
-.card:not(.night_mode) .theme-neumorphic-fluent .button-general:active,
-.card:not(.night_mode) .theme-neumorphic-fluent .button-general.expanded-button {
-  box-shadow: inset 4px 4px 8px var(--neumorphic-shadow-light-inner-strong), 
-              inset -4px -4px 8px var(--neumorphic-shadow-light-inner-soft);
-  color: var(--active-accent-light) !important; 
-}
-.card.night_mode .theme-neumorphic-fluent .button-general {
-  background-color: var(--card-bg-dark-opaque);
-  color: var(--text-color-dark) !important;
-  box-shadow: 5px 5px 10px var(--neumorphic-shadow-dark-outer-strong), 
-              -5px -5px 10px var(--neumorphic-shadow-dark-outer-soft);
-}
-.card.night_mode .theme-neumorphic-fluent .button-general:hover {
-  box-shadow: 6px 6px 12px var(--neumorphic-shadow-dark-outer-strong), 
-              -6px -6px 12px var(--neumorphic-shadow-dark-outer-soft);
-  color: var(--primary-accent-dark) !important;
-}
-.card.night_mode .theme-neumorphic-fluent .button-general:active,
-.card.night_mode .theme-neumorphic-fluent .button-general.expanded-button {
-  box-shadow: inset 4px 4px 8px var(--neumorphic-shadow-dark-inner-strong), 
-              inset -4px -4px 8px var(--neumorphic-shadow-dark-inner-soft);
-  color: var(--active-accent-dark) !important; 
+body.night_mode .theme-glassmorphism, body.night_mode .theme-glass-deep {
+  background: rgba(20, 20, 20, 0.2); border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* -------------------------------------------------- THEME: MATERIAL YOU INSPIRED -------------------------------------------------- */
-.prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism), 
-.theme-material-you {
-  background-color: var(--card-bg-light-transparent); 
-  backdrop-filter: blur(15px) saturate(130%); 
-  -webkit-backdrop-filter: blur(15px) saturate(130%);
-  border-radius: 1.5em; 
-  border: 1px solid rgba(var(--divider-light), 0.7); 
-  box-shadow: 0 4px 12px rgba(108, 122, 137, 0.1); 
-  /* color: var(--text-color-light); /* Inherits */
-  padding: 1.5em; 
+/* --- THEME: NEOBRUTALISM --- */
+.theme-neobrutalism {
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 2%));
+  border-radius: 0; border: 3px solid var(--text-primary);
+  box-shadow: 8px 8px 0px var(--text-primary);
 }
-.card.night_mode .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism),
-.card.night_mode .theme-material-you {
-  background-color: var(--card-bg-dark-transparent); 
-  border: 1px solid rgba(var(--divider-dark), 0.7);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  /* color: var(--text-color-dark); /* Inherits */
+body.night_mode .theme-neobrutalism { background-color: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark)); }
+
+/* --- THEME: CLAYMORPHISM --- */
+.theme-claymorphism {
+  background: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l));
+  border-radius: 50px 20px 40px 15px / 30px 45px 25px 55px;
+  box-shadow: inset -6px -6px 12px rgba(255,255,255,0.5), inset 6px 6px 16px rgba(0,0,0,0.1), 10px 10px 20px rgba(0,0,0,0.1);
 }
-.mobile .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism),
-.mobile .theme-material-you {
-    border-radius: 1em; 
-    padding: 1em;
-}
-.prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .cloze,
-.theme-material-you .cloze {
-  background-color: rgba(var(--primary-accent-light-rgb, 93, 173, 226), 0.2); 
-  color: var(--primary-accent-light);
-  border-radius: 0.5em; 
-  padding: 0.2em 0.6em;
-  box-shadow: none; 
-  font-weight: 500; 
-}
-.card.night_mode .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .cloze,
-.card.night_mode .theme-material-you .cloze {
-  background-color: rgba(var(--primary-accent-dark-rgb, 133, 193, 233), 0.25);
-  color: var(--primary-accent-dark);
-}
-.prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general,
-.theme-material-you .button-general {
-  border-radius: 2em; 
-  padding: 0.6em 1.5em; 
-  font-weight: 500;
-  box-shadow: 0 2px 5px rgba(108, 122, 137, 0.1);
-  border: 1px solid transparent;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-}
-.card:not(.night_mode) .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general,
-.card:not(.night_mode) .theme-material-you .button-general {
-  background-color: var(--card-bg-light-opaque); 
-  color: var(--primary-accent-light) !important;
-  border: 1px solid var(--divider-light);
-}
-.card:not(.night_mode) .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general:hover,
-.card:not(.night_mode) .theme-material-you .button-general:hover {
-  background-color: rgba(var(--primary-accent-light-rgb, 93, 173, 226), 0.1);
-  box-shadow: 0 3px 7px rgba(108, 122, 137, 0.15);
-}
-.card:not(.night_mode) .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general:active,
-.card:not(.night_mode) .theme-material-you .button-general.expanded-button, 
-.card:not(.night_mode) .theme-material-you .button-general:active {
-  background-color: rgba(var(--active-accent-light-rgb, 52, 152, 219), 0.15);
-  color: var(--active-accent-light) !important;
-  box-shadow: 0 1px 3px rgba(108, 122, 137, 0.1);
-  transform: translateY(1px);
-}
-.card.night_mode .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general,
-.card.night_mode .theme-material-you .button-general {
-  background-color: var(--card-bg-dark-opaque); 
-  color: var(--primary-accent-dark) !important;
-  border: 1px solid var(--divider-dark);
-}
-.card.night_mode .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general:hover,
-.card.night_mode .theme-material-you .button-general:hover {
-  background-color: rgba(var(--primary-accent-dark-rgb, 133, 193, 233), 0.15);
-}
-.card.night_mode .prettify-flashcard:not(.theme-neumorphic-fluent):not(.theme-glassmorphism) .button-general:active,
-.card.night_mode .theme-material-you .button-general.expanded-button, 
-.card.night_mode .theme-material-you .button-general:active {
-  background-color: rgba(var(--active-accent-dark-rgb, 93, 173, 226), 0.2);
-  color: var(--active-accent-dark) !important;
-  transform: translateY(1px);
+body.night_mode .theme-claymorphism {
+  background: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark));
+  box-shadow: inset -6px -6px 12px rgba(255,255,255,0.05), inset 6px 6px 16px rgba(0,0,0,0.3), 10px 10px 20px rgba(0,0,0,0.3);
 }
 
-/* -------------------------------------------------- THEME: GLASSMORPHISM -------------------------------------------------- */
-.theme-glassmorphism {
-  background-color: var(--true-glass-bg-light); 
-  backdrop-filter: blur(25px) saturate(180%); 
-  -webkit-backdrop-filter: blur(25px) saturate(180%);
-  border: 1px solid var(--glass-border-light); 
-  border-radius: 1.2em; 
-  box-shadow: var(--glass-shadow-light);
-  color: var(--glass-text-light); 
-  padding: 1.75em; 
+/* --- THEME: MINIMALIST --- */
+.theme-minimalist {
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 2%));
+  border: 2px solid var(--text-primary); border-radius: 4px; font-family: var(--font-family-mono);
 }
-.card.night_mode .theme-glassmorphism {
-  background-color: var(--true-glass-bg-dark); 
-  border: 1px solid var(--glass-border-dark);
-  box-shadow: var(--glass-shadow-dark);
-  color: var(--glass-text-dark);
+body.night_mode .theme-minimalist { background-color: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark)); }
+
+/* --- THEME: ACRYLIC --- */
+.theme-acrylic {
+  --acrylic-noise: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVrbW1sZWVjaGhxeXlgYGBkcXFiYmJhaGhhYWF4d3d0dHRsbGxlYmPEg4O0o6Ovq6vFh4eDg4N6enpsbW1qaGptZ2drB7rdAAAANXRSTlMACQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsKCQkLCwsK+wN8VwAAATNJREFUSMe1l9tygyAQRRUR8dG1vX3/t3UQqhGUEOlmM9k3b5bDeStVlpZWVpZNV0ySYl3EZeL2Ecnz9RlYllrv25p7zW2v3kAa+A1U7fpvA427tB+o2/gYkL8nL+A2I38nL+BCR/5+voBSr/x8/wBpH/l5QQGUn/l5/wAClH/l/SoBaXH+k/wD5Dz9k/wDBCj/qf8DdLr8p/4PCMz/p/8HhHX9K/8HjOr6V/8PqN35T/8PIMH5T/8PyNX5T/8P6Br8p/8PlBz8p/8PlBz4p/8PCAb+U/8PCAb+k/8PcBv4T/8PuBz4T/8PqNv4T/8P6A/8p/8P6A/8J/8PcA/8J/8PqA/8J/8PqA/8p/8PuA/4p/8PCAb+U/8PCAb+k/8PuBv4T/8PCAb+k/8P6Br8p/8PIMH5T/8PqN35T/8PjOr6V/8PCOv6V/8PCMz/p/8HdLr8p/wPqA/8p/wDBCj/qf8D5Dz9k/wD5Hj+k/wDBlD/l/SoBWFx/pP8A6Vf+fn+ANKv/Hy/AClX/n5+gNGv/Hy/AAlb+Tl/AxI28nL+A4Q18nL+AyQ28nL+AxSN/JO3/gGkG/k7f+AGQN/JOv/gGk2/knb/gBVLfxT3/gBURb+KWv/gGru/FN/+AFUt/JO3/gAVJf/JO/+AFUl/JOv/gBkv/FPf+AEyA/8nb/gBkv/FP/gAmA/8nb/gAkv/FP/gAmQ3/knb/gCkv/J2/8Akg3/knb/gCUhT/JO/+AEwB/8nb/gAwB/8k7f+AEwB/8nb/gAwB/8k7f+AEwB/8nb/gAwB/8k7f+AEwB/8nb/gAwB/8k7f+AEwB/8nb/gAwB/8k7f+AFQl/8nb/gCpBv+Tt/4AlBr+Tt/4AFQG/knb/gBUpP/J2/8AFLb+Sd/+ACCGv5J2/8AQEH/knb/wBCQH/knb/wBCQH/knb/wBCQH/knb/wBCQH/knb/wBCQH/knb/wBCQH/knb/wBAwH/knb/wBAwH/knb/wBAwH/knb/wBCQH/knb/wBAwH/knb/wBCQH/knb/wBAQH/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBAQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCQX/knb/wBCTH8k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7f+AEyW38k7e8/p8ADAH8D6l2L8YAAAAASUVORK5CYII=);
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l), 0.7);
+  background-image: var(--acrylic-noise); backdrop-filter: blur(50px) saturate(120%); -webkit-backdrop-filter: blur(50px) saturate(120%);
+  border-radius: 0.8em; border: 1px solid hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l), 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
-.mobile .theme-glassmorphism {
-    border-radius: 0.9em;
-    padding: 1.2em;
+body.night_mode .theme-acrylic { background-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark), 0.65); border-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark), 0.2); }
+
+/* --- THEME: GELATIN, QUARTZ, OBSIDIAN, HOLOGRAPHIC --- */
+.theme-gelatin { background: rgba(from var(--accent-1) r g b / 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 3em; border: 1px solid rgba(from var(--accent-1) r g b / 0.2); }
+.theme-quartz { background: hsla(var(--p-hue-bg), 20%, 98%, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 0.5em; border: 1px solid hsla(var(--p-hue-bg), 20%, 98%, 0.7); box-shadow: inset 0 0 20px hsla(var(--p-hue-bg), 20%, 98%, 0.3); }
+body.night_mode .theme-quartz { background: hsla(var(--p-hue-bg), 10%, 10%, 0.4); border-color: hsla(var(--p-hue-bg), 10%, 10%, 0.5); box-shadow: inset 0 0 20px hsla(var(--p-hue-bg), 10%, 10%, 0.2); }
+.theme-obsidian { background: linear-gradient(145deg, hsl(var(--p-hue-bg), 10%, 25%), hsl(var(--p-hue-bg), 10%, 15%)); border-radius: 0.75em; border: 1px solid hsl(var(--p-hue-bg), 10%, 35%); box-shadow: inset 0 1px 1px hsl(var(--p-hue-bg), 10%, 30%), 0 5px 15px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
+.theme-obsidian::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 70% 20%, hsla(var(--p-hue-accent), 50%, 60%, 0.3), transparent 40%); opacity: 0.5; mix-blend-mode: soft-light; pointer-events: none; }
+body.night_mode .theme-obsidian { background: linear-gradient(145deg, hsl(var(--p-hue-bg), 10%, 18%), hsl(var(--p-hue-bg), 10%, 8%)); border-color: hsl(var(--p-hue-bg), 10%, 25%); }
+.theme-holographic { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: var(--base-border-radius); position: relative; overflow: hidden; }
+.theme-holographic .holo-sheen { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), hsla(0, 100%, 100%, 0.3), transparent 40%); background-blend-mode: screen; transition: transform 0.1s ease-out; pointer-events: none; }
+
+/* === NEW THEME: LIQUID GLASS (SMOOTHER & MORE TRANSPARENT) === */
+.theme-liquid-glass {
+  background-color: rgba(255, 255, 255, 0.15); /* More transparent */
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  border-radius: calc(var(--base-border-radius) + 10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  overflow: hidden; /* Important to contain pseudo-elements */
 }
-.theme-glassmorphism .cloze {
-  background-color: rgba(255, 255, 255, 0.1); 
-  color: var(--primary-accent-light); 
-  border-radius: 0.4em;
-  padding: 0.2em 0.6em;
+body.night_mode .theme-liquid-glass {
+  background-color: rgba(30, 30, 30, 0.2); /* More transparent */
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+/* Specular Highlight Layer */
+.theme-liquid-glass::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.5), transparent 30%);
+  z-index: -1;
+  opacity: 0.5;
+}
+body.night_mode .theme-liquid-glass::after {
+  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2), transparent 35%);
+}
+/* === END NEW THEME === */
+
+
+/*
+================================================================================
+IV.   THEME-AWARE TABLE STYLES
+================================================================================
+*/
+
+/* --- BASE TABLE STYLES --- */
+.prettify-flashcard table {
+  width: auto;
+  max-width: 95%;
+  margin: 1.5em auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--divider);
+  border-radius: 0.6em;
+  font-size: 0.9em;
+  box-shadow: 0 2px 5px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 10%), calc(var(--p-text-l) - 10%), 0.07);
+  overflow: hidden;
+  color: var(--text-primary);
+}
+
+.prettify-flashcard th,
+.prettify-flashcard td {
+  padding: 0.75em 1em;
+  text-align: left;
+  border-bottom: 1px solid var(--divider);
+}
+
+.prettify-flashcard td:not(:last-child),
+.prettify-flashcard th:not(:last-child) {
+  border-right: 1px solid var(--divider);
+}
+
+.prettify-flashcard th {
+  background-color: rgba(from var(--accent-1) r g b / 0.1);
+  color: var(--accent-1);
+  font-weight: bold;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--accent-1);
+}
+
+.prettify-flashcard tr:last-child td {
+  border-bottom: none;
+}
+
+.prettify-flashcard:not(body.night_mode *) tbody tr:nth-child(even) td {
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) - 3%), 0.3);
+}
+
+body.night_mode .prettify-flashcard tbody tr:nth-child(even) td {
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 3%), 0.3);
+}
+
+.mobile .prettify-flashcard table {
+  display: block; width: 100%; max-width: 100%; overflow-x: auto; white-space: nowrap; font-size: 0.8em; margin: 1em 0; border-radius: 0.5em;
+}
+.mobile .prettify-flashcard th,
+.mobile .prettify-flashcard td {
+  white-space: normal;
+  padding: 0.5em 0.75em;
+}
+
+/* --- THEME-SPECIFIC TABLE OVERRIDES --- */
+
+.theme-default table,
+.prettify-flashcard:not([class*="theme-"]) table,
+.theme-fluent table {
+  box-shadow: 0 3px 8px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 10%), calc(var(--p-text-l) - 10%), 0.1);
+}
+.theme-default th,
+.prettify-flashcard:not([class*="theme-"]) th,
+.theme-fluent th {
+  background-color: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l), 0.15);
+}
+
+.theme-glassmorphism table,
+.theme-glass-deep table {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: none;
-  border: 1px solid rgba(255,255,255,0.15); 
-  font-weight: 500;
+  border-radius: 0.5em;
 }
-.card.night_mode .theme-glassmorphism .cloze {
-  background-color: rgba(200, 200, 200, 0.08); 
-  color: var(--primary-accent-dark); 
-  border: 1px solid rgba(200,200,200,0.1);
+body.night_mode .theme-glassmorphism table,
+body.night_mode .theme-glass-deep table {
+  background-color: rgba(50, 50, 50, 0.05);
+  border-color: rgba(255, 255, 255, 0.07);
 }
-.theme-glassmorphism .button-general {
-  background-color: rgba(255, 255, 255, 0.1); 
-  color: var(--glass-text-light) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.6em; 
-  padding: 0.7em 1.3em;
-  font-weight: 500;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+.theme-glassmorphism th, .theme-glass-deep th {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-bottom-color: rgba(255,255,255,0.15);
+  border-right-color: rgba(255,255,255,0.1);
 }
-.theme-glassmorphism .button-general:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255,255,255,0.25);
+body.night_mode .theme-glassmorphism th, body.night_mode .theme-glass-deep th {
+  background-color: rgba(from var(--accent-1) r g b / 0.08);
+  border-bottom-color: rgba(from var(--accent-1) r g b / 0.12);
+  border-right-color: rgba(from var(--accent-1) r g b / 0.08);
 }
-.theme-glassmorphism .button-general:active,
-.theme-glassmorphism .button-general.expanded-button {
-  background-color: rgba(255, 255, 255, 0.05); 
-  color: var(--active-accent-light) !important; 
-  transform: translateY(1px);
+.theme-glassmorphism td, .theme-glass-deep td {
+  border-bottom-color: rgba(255,255,255,0.08);
+  border-right-color: rgba(255,255,255,0.05);
 }
-.card.night_mode .theme-glassmorphism .button-general {
-  background-color: rgba(180, 180, 180, 0.08); 
-  color: var(--glass-text-dark) !important;
-  border: 1px solid rgba(200, 200, 200, 0.1);
+body.night_mode .theme-glassmorphism td, body.night_mode .theme-glass-deep td {
+  border-bottom-color: rgba(from var(--accent-1) r g b / 0.07);
+  border-right-color: rgba(from var(--accent-1) r g b / 0.05);
 }
-.card.night_mode .theme-glassmorphism .button-general:hover {
-  background-color: rgba(180, 180, 180, 0.15);
-  border-color: rgba(200,200,200,0.2);
+.theme-glassmorphism tr:last-child td, .theme-glass-deep tr:last-child td { border-bottom: none;}
+.theme-glassmorphism td:last-child, .theme-glassmorphism th:last-child,
+.theme-glass-deep td:last-child, .theme-glass-deep th:last-child { border-right: none; }
+
+
+.theme-neobrutalism table {
+  border: 3px solid var(--text-primary);
+  border-radius: 0;
+  box-shadow: 6px 6px 0px var(--text-primary);
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 3%));
 }
-.card.night_mode .theme-glassmorphism .button-general:active,
-.card.night_mode .theme-glassmorphism .button-general.expanded-button {
-  background-color: rgba(180, 180, 180, 0.05);
-  color: var(--active-accent-dark) !important; 
+body.night_mode .theme-neobrutalism table {
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 2%));
+}
+.theme-neobrutalism th, .theme-neobrutalism td {
+  border-width: 0 0 3px 0;
+  border-color: var(--text-primary);
+}
+.theme-neobrutalism td:not(:last-child), .theme-neobrutalism th:not(:last-child) {
+  border-right-width: 3px;
+  border-right-style: solid;
+}
+.theme-neobrutalism th {
+  background-color: var(--accent-2);
+  color: var(--c-grad-1-light);
+}
+body.night_mode .theme-neobrutalism th {
+  color: var(--c-grad-1-dark);
+}
+.theme-neobrutalism tbody tr:nth-child(even) td {
+  background-color: transparent;
 }
 
-/* Add RGB versions of accent colors for use with alpha */
-:root {
-  --primary-accent-light-rgb: 93, 173, 226;
-  --active-accent-light-rgb: 52, 152, 219;
-  --primary-accent-dark-rgb: 133, 193, 233;
-  --active-accent-dark-rgb: 93, 173, 226;
+
+.theme-claymorphism table {
+  border-radius: 20px 8px 15px 5px / 10px 18px 8px 22px;
+  box-shadow: inset -3px -3px 6px rgba(255,255,255,0.3), inset 3px 3px 8px rgba(0,0,0,0.07), 5px 5px 10px rgba(0,0,0,0.07);
+  border: 1px solid hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) - 5%));
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) - 2%));
+}
+body.night_mode .theme-claymorphism table {
+  box-shadow: inset -3px -3px 6px rgba(255,255,255,0.03), inset 3px 3px 8px rgba(0,0,0,0.2), 5px 5px 10px rgba(0,0,0,0.2);
+  border-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 5%));
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 2%));
+}
+.theme-claymorphism th {
+   background-color: transparent;
+   border-bottom-color: var(--accent-1);
+}
+.theme-claymorphism td { border-color: var(--divider); }
+.theme-claymorphism tbody tr:nth-child(even) td { background-color: transparent; }
+
+
+.theme-minimalist table {
+  border: 2px solid var(--text-primary);
+  border-radius: 2px;
+  box-shadow: none;
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l));
+}
+body.night_mode .theme-minimalist table {
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark));
+}
+.theme-minimalist th, .theme-minimalist td {
+  border-color: var(--text-primary);
+  padding: 0.5em 0.75em;
+}
+.theme-minimalist th {
+  background-color: var(--text-primary);
+  color: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l));
+}
+body.night_mode .theme-minimalist th {
+  color: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark));
+}
+.theme-minimalist tbody tr:nth-child(even) td {
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) - 5%));
+}
+body.night_mode .theme-minimalist tbody tr:nth-child(even) td {
+  background-color: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 5%));
 }
 
-/* -------------------------------------------------- COMMON ELEMENT STYLES (Apply to all themes unless overridden) */
+
+.theme-acrylic table {
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l), 0.5);
+  border: 1px solid hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l), 0.15);
+  backdrop-filter: blur(10px) saturate(100%); -webkit-backdrop-filter: blur(10px) saturate(100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+body.night_mode .theme-acrylic table {
+  background-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark), 0.45);
+  border-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark), 0.25);
+}
+.theme-acrylic th {
+  background-color: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l), 0.1);
+}
+.theme-acrylic td, .theme-acrylic th {
+  border-color: hsla(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l), 0.1);
+}
+body.night_mode .theme-acrylic td, body.night_mode .theme-acrylic th {
+  border-color: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 10%), 0.15);
+}
+
+
+.theme-gelatin table {
+  background: rgba(from var(--accent-1) r g b / 0.1);
+  border: 1px solid rgba(from var(--accent-1) r g b / 0.15);
+  border-radius: 1.5em;
+  box-shadow: none;
+}
+.theme-gelatin th {
+  background-color: rgba(from var(--accent-1) r g b / 0.15);
+  border-bottom-color: rgba(from var(--accent-1) r g b / 0.2);
+}
+.theme-gelatin td, .theme-gelatin th {
+  border-color: rgba(from var(--accent-1) r g b / 0.1);
+}
+
+
+.theme-quartz table {
+  background: hsla(var(--p-hue-bg), 20%, 97%, 0.3);
+  border: 1px solid hsla(var(--p-hue-bg), 20%, 95%, 0.5);
+  box-shadow: inset 0 0 10px hsla(var(--p-hue-bg), 20%, 98%, 0.1);
+  border-radius: 0.3em;
+}
+body.night_mode .theme-quartz table {
+  background: hsla(var(--p-hue-bg), 10%, 12%, 0.3);
+  border-color: hsla(var(--p-hue-bg), 10%, 15%, 0.5);
+  box-shadow: inset 0 0 10px hsla(var(--p-hue-bg), 10%, 10%, 0.1);
+}
+.theme-quartz th {
+  background-color: hsla(var(--p-hue-bg), 20%, 95%, 0.4);
+}
+body.night_mode .theme-quartz th {
+  background-color: hsla(var(--p-hue-bg), 10%, 15%, 0.4);
+}
+
+
+.theme-obsidian table {
+  background: linear-gradient(145deg, hsl(var(--p-hue-bg), 10%, 22%), hsl(var(--p-hue-bg), 10%, 12%));
+  border: 1px solid hsl(var(--p-hue-bg), 10%, 30%);
+  box-shadow: inset 0 1px 0px hsl(var(--p-hue-bg), 10%, 28%), 0 2px 5px rgba(0,0,0,0.2);
+}
+body.night_mode .theme-obsidian table {
+  background: linear-gradient(145deg, hsl(var(--p-hue-bg), 10%, 15%), hsl(var(--p-hue-bg), 10%, 6%));
+  border-color: hsl(var(--p-hue-bg), 10%, 20%);
+}
+.theme-obsidian th {
+  background-color: hsl(var(--p-hue-bg), 10%, 25%);
+  border-bottom-color: hsl(var(--p-hue-bg), 10%, 35%);
+}
+body.night_mode .theme-obsidian th {
+  background-color: hsl(var(--p-hue-bg), 10%, 18%);
+  border-bottom-color: hsl(var(--p-hue-bg), 10%, 28%);
+}
+.theme-obsidian td, .theme-obsidian th {
+  border-color: hsl(var(--p-hue-bg), 10%, 25%);
+}
+body.night_mode .theme-obsidian td, body.night_mode .theme-obsidian th {
+  border-color: hsl(var(--p-hue-bg), 10%, 20%);
+}
+
+
+.theme-holographic table {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.5em;
+  box-shadow: none;
+}
+body.night_mode .theme-holographic table {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.1);
+}
+.theme-holographic th {
+  background-color: rgba(255,255,255,0.07);
+}
+body.night_mode .theme-holographic th {
+  background-color: rgba(255,255,255,0.05);
+}
+
+/*
+================================================================================
+V.   THEME-AWARE BUTTONS
+================================================================================
+*/
+.button-general {
+  outline: 0; border-radius: 0.75em; padding: 0.8em 1.2em;
+  text-align: center; display: inline-block; font-size: 0.85rem; font-weight: 600;
+  margin: 10px 5px; cursor: pointer; transition: all 0.2s ease-out; position: relative;
+  background-color: hsla(var(--p-hue-accent), 20%, 50%, 0.1); color: var(--accent-1) !important;
+  border: 1px solid hsla(var(--p-hue-accent), 20%, 50%, 0.2);
+}
+.button-general:hover { background-color: hsla(var(--p-hue-accent), 20%, 50%, 0.2); border-color: var(--accent-2); }
+.button-general:active, .button-general.expanded-button { transform: translateY(1px); }
+
+/* Specific Theme Button Overrides */
+.theme-neobrutalism .button-general { background-color: var(--p-bold-fg); color: var(--text-primary) !important; border-radius: 0; border: 2px solid var(--text-primary); box-shadow: 3px 3px 0 var(--text-primary); }
+.theme-claymorphism .button-general { background: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l)); box-shadow: -4px -4px 8px rgba(255,255,255,0.5), 4px 4px 8px rgba(0,0,0,0.1); border: none; }
+body.night_mode .theme-claymorphism .button-general { background: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark)); box-shadow: -4px -4px 8px rgba(255,255,255,0.05), 4px 4px 8px rgba(0,0,0,0.3); }
+.theme-minimalist .button-general { border-radius: 2px; }
+.theme-quartz .button-general { background: transparent; border: 1px solid var(--divider); }
+.theme-obsidian .button-general { background: hsl(var(--p-hue-bg), 10%, 22%); border: 1px solid hsl(var(--p-hue-bg), 10%, 35%); }
+body.night_mode .theme-obsidian .button-general { background: hsl(var(--p-hue-bg), 10%, 12%); border-color: hsl(var(--p-hue-bg), 10%, 25%); }
+.theme-glassmorphism .button-general, .theme-glass-deep .button-general, .theme-holographic .button-general, .theme-liquid-glass .button-general { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--text-primary) !important; }
+body.night_mode .theme-glassmorphism .button-general, body.night_mode .theme-glass-deep .button-general, body.night_mode .theme-holographic .button-general, body.night_mode .theme-liquid-glass .button-general { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+.theme-acrylic .button-general { background-color: hsla(var(--p-hue-accent), 20%, 50%, 0.1); border-color: hsla(var(--p-hue-accent), 20%, 50%, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+/*
+================================================================================
+VI.  MISCELLANEOUS & ANKING STYLES
+================================================================================
+*/
+#tags-container { display: none; }
+.mobile .card { padding: 0.8em; }
+.mobile .prettify-flashcard { padding: 1em; margin: 0; width: 100%; max-width: 100%; }
 .prettify-field { margin: 1.5em; }
 .mobile .prettify-field { margin: 1em; }
-.prettify-field--back { color: var(--text-fg-faint); font-size: var(--font-size-small); }
-.prettify-field--extra-content { /* Styles for the Extra field content wrapper */ }
 
-.prettify-deck { margin: 1.5em 1.5em 0.5em 1.5em; display: flex; justify-content: center; color: var(--text-fg-faint); font-size: var(--font-size-small); white-space: nowrap; }
-.mobile .prettify-deck { margin: 1em; font-size: calc(var(--font-size-small) - 1px); }
-.prettify-subdeck { text-decoration: underline; text-overflow: ellipsis; overflow: hidden; }
-
-.prettify-tags { margin: 1em 1.5em 1.5em 1.5em; display: flex; flex-flow: row wrap; justify-content: center; font-size: var(--font-size-small); }
-.mobile .prettify-tags { margin: 0.75em; padding: 0.5em; }
-.prettify-tag { all: initial; font-family: var(--font-family); background-color: var(--tag-bg); border: 1px solid var(--tag-border); border-radius: 0.4em; color: var(--tag-fg); display: inline-block; font-size: var(--font-size-small); margin: 0.25em 0.3em; padding: 0.3em 0.6em; transition: all 0.2s ease-in-out; word-break: break-word; box-shadow: none; }
-.mobile .prettify-tag { font-size: calc(var(--font-size-small) - 2px); padding: 0.2em 0.4em; margin: 0.15em 0.2em; }
-.prettify-tag:hover { background-color: var(--tag-bg-hover); color: var(--tag-fg-active); border-color: var(--tag-border-active); transform: translateY(0); cursor: pointer; }
-
-.prettify-divider { background-color: transparent; border: none; border-bottom: 1px dashed var(--divider); margin: 1.5em; padding: 0; }
-.mobile .prettify-divider { margin: 1em; }
-.prettify-divider--answer { margin: 0 0 1.5em; }
-.mobile .prettify-divider--answer { margin: 0 0 1em; }
-
-img { 
-  border-radius: 0.5em; 
-  display: block; 
-  margin: 1em auto; 
-  max-width: var(--img-width) !important; /* Default smaller size */
-  height: auto; 
-  transition: transform 0.25s ease-in-out, opacity 0.25s 0.1s, filter 0.1s, box-shadow 0.2s ease; 
+/* Image Styling */
+img {
+  border-radius: 0.5em; display: block; margin: 1em auto; max-width: 60% !important; height: auto; transition: transform 0.25s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-.mobile img { 
-  max-width: 100% !important; /* Ensure images scale down fully on mobile */
-  height: auto !important; 
+.card:not(.night_mode) .prettify-flashcard img {
+   box-shadow: 0 4px 10px hsla(var(--p-hue-bg), var(--p-text-s), calc(var(--p-text-l) - 15%), 0.12);
 }
-.card:not(.night_mode) img { box-shadow: 0 4px 8px rgba(108, 122, 137, 0.07); }
-.card.night_mode img { filter: var(--img-filter); opacity: var(--img-brightness); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-
-/* MODIFIED: Image click active state - simpler scale, no fixed positioning */
-html:not(.mobile) img:hover { 
-  cursor: zoom-in; 
-  filter: none; 
-  opacity: 1; 
-  transform: scale(1.5); 
+body.night_mode .prettify-flashcard img {
+   box-shadow: 0 4px 12px hsla(0, 0%, 0%, 0.25);
 }
-html:not(.mobile) img:active {
-  transform: scale(1.25); 
-  box-shadow: 0 10px 25px rgba(108, 122, 137, 0.2);
-  cursor: zoom-out;
-  z-index: 100; 
-}
-.card.night_mode html:not(.mobile) img:active {
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-/* END MODIFIED Image click */
+.mobile img { max-width: 100% !important; height: auto !important; }
+html:not(.mobile) .prettify-flashcard img:hover { transform: scale(1.3); cursor: zoom-in; }
+html:not(.mobile) .card:not(.night_mode) .prettify-flashcard img:hover { box-shadow: 0 8px 20px hsla(var(--p-hue-bg), var(--p-text-s), calc(var(--p-text-l) - 25%), 0.2); }
+html:not(.mobile) body.night_mode .prettify-flashcard img:hover { box-shadow: 0 8px 25px hsla(0, 0%, 0%, 0.35); }
+html:not(.mobile) .prettify-flashcard img:active { transform: scale(1.05); cursor: zoom-out; }
 
-img + br { display: none; }
-
-table { border-collapse: separate; border-spacing: 0; margin: 1em auto; max-width: 100%; border-radius: 0.5em; overflow: hidden; }
-.mobile table { font-size: clamp(0.6rem, 1.5vw, 0.8rem) !important; display: block; overflow-x: auto; white-space: nowrap; }
-.mobile table th, .mobile table td { white-space: normal; padding: 0.5em; }
-.card:not(.night_mode) table { box-shadow: 0 2px 4px rgba(108, 122, 137, 0.07); }
-.card.night_mode table { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-table thead { background-color: var(--card-border); }
-.card.night_mode table thead { background-color: #3b4252; }
-table tr:nth-of-type(even) { background-color: var(--card-border); }
-.card.night_mode table tr:nth-of-type(even) { background-color: #343b4a; }
-table tr:first-child th:first-child { border-top-left-radius: 0.5em; }
-table tr:first-child th:last-child { border-top-right-radius: 0.5em; }
-table tr:last-child td:first-child { border-bottom-left-radius: 0.5em; }
-table tr:last-child td:last-child { border-bottom-right-radius: 0.5em; }
-table th { border-bottom: solid 1px var(--text-bg-selected); border-left: solid 1px var(--text-bg-selected); border-top: solid 1px var(--text-bg-selected); padding: 0.75em; text-align: left; }
-table th:last-child { border-right: solid 1px var(--text-bg-selected); }
-table td { border-bottom: solid 1px var(--text-bg-selected); border-left: solid 1px var(--text-bg-selected); padding: 0.75em; }
-table td:last-of-type { border-right: solid 1px var(--text-bg-selected); }
-
-a, a:visited { text-decoration: none; color: var(--link-fg); transition: color 0.2s ease, background-color 0.2s ease; border-radius: 0.2em; padding: 0.1em 0.2em; }
-a:hover, a:active { text-decoration: underline; color: var(--link-fg-active); background-color: var(--link-bg-active); }
-
-/* --- MODIFIED: Ensure Semantic Highlighting Uses Variables Correctly --- */
-.prettify-flashcard b, .prettify-flashcard strong { color: var(--bold-fg); }
-.prettify-flashcard i, .prettify-flashcard em { color: var(--italic-fg); }
-.prettify-flashcard u { 
-  text-decoration-color: var(--underline-fg); 
-  color: var(--underline-fg); 
-}
-.card:not(.night_mode) .prettify-flashcard b > i, .card:not(.night_mode) .prettify-flashcard i > b, 
-.card:not(.night_mode) .prettify-flashcard strong > em, .card:not(.night_mode) .prettify-flashcard em > strong { 
-  color: var(--bold-italic-fg-light); 
-}
-.card.night_mode .prettify-flashcard b > i, .card.night_mode .prettify-flashcard i > b, 
-.card.night_mode .prettify-flashcard strong > em, .card.night_mode .prettify-flashcard em > strong {
-  color: var(--bold-italic-fg-dark); 
-}
-/* --- END MODIFIED Semantic Highlighting --- */
-
-
-@font-face { font-family: Rubik; src: local("Rubik-Regular"), url("_Rubik-Regular.woff2") format("woff2"); font-style: normal; font-weight: normal; }
-@font-face { font-family: Rubik; src: local("Rubik-Bold"), url("_Rubik-Bold.woff2") format("woff2"); font-style: normal; font-weight: bold; }
-@font-face { font-family: Rubik; src: local("Rubik-Italic"), url("_Rubik-Italic.woff2") format("woff2"); font-style: italic; font-weight: normal; }
-@font-face { font-family: Rubik; src: local("Rubik-BoldItalic"), url("_Rubik-BoldItalic.woff2") format("woff2"); font-style: italic; font-weight: bold; }
-
-/* ANKINGOVERHAUL SECTION - Color variables should now take effect */
-/* TIMER ON/OFF */
+/* Other styles */
 .timer { display: none; }
-/* TAGS ON/OFF DESKTOP & MOBILE*/
-#tags-container { display: none; padding-bottom: 0px; }
 .mobile #tags-container { display: none; }
-/* MOVE TAGS UP FOR 'NO-DISTRACTIONS' ADD-ON */
-/* #tags-container { padding-bottom: 0px; } */ /* Already set above */
-
-/*~~~~~~~~~FONT SIZE~~~~~~~~~*/
-html { font-size: var(--font-size-regular); } /* This is fine for base, card content uses its own font size */
-.mobile { font-size: var(--font-size-mobile); }
 .hints { font-size: .9rem; }
-.mobile .hints { font-size: 0.85rem; }
-#firstaid, #sketchy, #sketchy2, #sketchyextra, #picmonic, #pixorize, #physeo, #additional { font-size: .8rem !important; }
-.mobile #firstaid, .mobile #sketchy, .mobile #sketchy2, .mobile #sketchyextra, .mobile #picmonic, .mobile #pixorize, .mobile #physeo, .mobile #additional { font-size: 16px !important; }
-
-/*~~~~~~~~~FONT STYLE~~~~~~~~~*/
-/* .card and kbd font is handled by base styles or specific theme styles for .prettify-flashcard */
-
-/*~~~~~~~MAX IMAGE HEIGHT/WIDTH~~~~~~~*/
-#firstaid img, #sketchy img, #sketchy2 img, #sketchyextra img, #picmonic img, #pixorize img, #physeo img, #additional img { max-width: 70%; }
-
-/*~~~~~~~~~COLORS~~~~~~~~~*/
-/* Default Text Color for .prettify-flashcard is handled by theme */
-/* Cloze Color is handled by theme */
-/* One by One Cloze Color & Hint Color will inherit from .cloze styling per theme */
-
-/* "Extra" Field Color - Use main text color for consistency */
-.prettify-flashcard #extra, .prettify-flashcard #extra i { color: var(--text-fg); }
-/* Night mode will inherit from .card.night_mode .prettify-flashcard color */
-
-/* Hint Reveal Color - Use faint text color or specific hint variable */
-.prettify-flashcard .hints { color: var(--text-fg-faint); }
-/* Night mode will inherit */
-
-/* Missed Questions Hint Reveal Color - Use a bold/accent color */
-.prettify-flashcard #missed { color: var(--bold-fg); } /* Using bold color, often red/orange */
-/* Night mode will inherit */
-
-.timer { color: transparent; }
-a:not([href]), a[href^="javascript:"] { text-decoration: none; color: inherit; }
-
-/* ~~~~~COLOR ACCENTS FOR BOLD-ITALICS-UNDERLINE in AnKing section ~~~~~~*/
-/* These are now handled by the more specific .prettify-flashcard b, i, u rules above */
-
-/*################  USER CUSTOMIZATION END  ################*/
-
-/* Styling For Whole Card (.card is Anki window) */
-/* .card { text-align: center; margin: 0px; } /* Already handled */
-/* .mobile .card { margin: 0; padding: 0.3em; } /* Already handled */
-
-hr { opacity: .7; border: 0; border-top: 1px solid var(--divider); margin: 1.5em auto; width: 80%; }
-.timer { font-size: 1.2em; margin: 2em auto; }
-.clozefield, .mobile .editcloze { display: none; }
-.editcloze, .mobile .clozefield { display: block; }
-.hints + #extra { margin-top: 1.5rem; }
-.mobile .hints + #extra { margin-top: 1rem; }
-table { max-width: 95vw; } 
-.card:not(.night_mode) table { box-shadow: 0 2px 5px rgba(108, 122, 137, 0.1), 0 0 0 1px var(--divider-light); }
-.card.night_mode table { box-shadow: 0 2px 5px rgba(0,0,0,0.15), 0 0 0 1px var(--divider-dark); }
-table tr, td, th { padding-top: clamp(0.3rem, 1vw, 0.8rem); padding-bottom: clamp(0.3rem, 1vw, 0.8rem); padding-left: clamp(0.5rem, 1vw, 1rem); padding-right: clamp(0.5rem, 1vw, 1rem); border: 1px solid var(--divider); }
-table span { font-size: clamp(0.7rem, 1.7vw, 0.9rem) !important; }
-table tr td:first-child[colspan]:last-child[colspan] { background-color: var(--card-border); color: var(--text-fg); border-top: 2px solid var(--link-fg); border-bottom: 2px solid var(--link-fg); text-align: center; padding-top: 0.8vw; padding-bottom: 0.8vw; font-weight: bold; }
-table th { background-color: var(--tag-bg-active); color: var(--tag-fg-active); border: 1px solid var(--divider); font-weight: bold; text-align: center; }
-table tr:nth-child(even) { color: var(--text-fg); background-color: var(--card-border); }
-.card.night_mode table { color: var(--text-fg); border: 1px solid var(--card-border); background-color: var(--card-bg-opaque); }
-#extra img { min-width: 0%; }
-.mobile .hints img, .mobile #extra img { max-width: 100% !important; }
-.image40 img { width: 40% !important; } .image50 img { width: 50% !important; } .image60 img { width: 60% !important; } .image70 img { width: 70% !important; } .image80 img { width: 80% !important; } .image90 img { width: 90% !important; }
-.image40 img, .image50 img, .image60 img, .image70 img, .image80 img, .image90 img { display: block; margin-right: auto; margin-left: auto; }
-.mobile .image40 img, .mobile .image50 img, .mobile .image60 img, .mobile .image70 img, .mobile .image80 img, .mobile .image90 img { width: auto !important; }
-#extra img:active, #notes img:active, #missed img:active, #pathoma img:active, #bnb img:active { transform: scale(1.15); }
-#firstaid img:active, #sketchy img:active, #sketchy2 img:active, #sketchyextra img:active, #picmonic img:active, #pixorize img:active, #physeo img:active, #additional img:active { transform: scale(1.3); }
-.mobile img:active { transform: scale(1.0) !important; }
-.mnemonics { display: inline-block; max-width: 80%; text-align: left; }
-.centerbox { text-align: center; }
-ul, ol { padding-left: 2em; max-width: 90%; display: inline-block; text-align: left; margin-top: 0.5em; margin-bottom: 0.5em; }
-.mobile ul, .mobile ol { padding-left: 1.5em; max-width: 95%; }
-ul ul, table ul, ol ol, table ol { padding-left: 1.5em; max-width: 100%; margin-left: 0; margin-right: 0; }
-.mobile ul, .mobile ol { text-align: left; max-width: 100%; padding-left: 1.5em; }
-.card { --w: 0%; }
-.mobile .card { --w: 100% !important; }
-.card [class^=ui-] img { max-width: 100% !important; }
-.resizer { min-width: 0% !important; }
-.mobile .resizer { min-width: 100% !important; }
-.qtip img { max-width: 95% !important; max-height: 95% !important; }
-#pic { opacity: 0.0; height: 40px; width: auto; border: 0; position: fixed; bottom: 15px; right: 15px; display: block; transition: opacity 0.3s ease; z-index: 1000; }
-#pic:hover { opacity: 1; }
-.mobile #pic { display: none; }
-.banner-ome { max-width: 280px; display: block; margin-left: auto; margin-right: auto; margin-top: 1em; margin-bottom: 1em; }
-.mobile .banner-ome { display: none; }
-#button-ome { display: none; }
-.mobile #button-ome { display: inline-block; }
-
-.button-general {
-  outline: 0;
-  border: none; 
-  border-radius: 0.75em; 
-  padding: 0.8em 1.2em; 
-  text-align: center;
-  display: inline-block;
-  font-size: 0.85rem; 
-  font-weight: 600; 
-  margin-top: 10px;
-  margin-left: 5px; 
-  margin-right: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease-out;
-  position: relative; 
-}
-.button-general:hover { transform: translateY(-1px); }
-.button-general:active, .button-general.expanded-button { transform: translateY(1px); font-weight: 700; }
-.mobile .button-general { font-size: 0.9rem; padding: 0.7em 1em; border-radius: 0.6em; margin-top: 8px; margin-left: 3px; margin-right: 3px; }
-.expanded-button { display: block; margin: 15px auto 10px auto; width: 90% !important; }
-.mobile .expanded-button { width: 95% !important; }
-html:not(.mobile) .tagBasedHintBtn { display: none; }
-img.blur { transition: filter 0.3s ease; filter: blur(15px); }
-img.blur:hover { filter: blur(0px); }
-.hidden { display: none !important; }
-
-@keyframes card-bounce {
-  0%, 100% { transform: scale(1) translateZ(0); }
-  30% { transform: scale(1.03) translateZ(0); }
-  60% { transform: scale(0.98) translateZ(0); }
-}
+@keyframes card-bounce { 0%, 100% { transform: scale(1) translateZ(0); } 30% { transform: scale(1.03) translateZ(0); } 60% { transform: scale(0.98) translateZ(0); } }
 .card-bounce-animation { animation: card-bounce 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.5); }
+#pic { opacity: 0.0; height: 40px; width: auto; border: 0; position: fixed; bottom: 15px; right: 15px; display: block; transition: opacity 0.3s ease; z-index: 1000; }
+#pic:hover { opacity: 1; } .mobile #pic { display: none; }
 
-/* ANKIHUB_END */
+
+/* === MODIFICATION: Readability Improvement (Text Shadow) === */
+body.night_mode .prettify-flashcard,
+body.night_mode .prettify-deck,
+body.night_mode .cloze,
+body.night_mode b,
+body.night_mode i,
+body.night_mode u {
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.7);
+}
+/* === END MODIFICATION === */
+
+/*
+ANKIHUB_END
+Text below this comment will not be modified by AnkiHub or AnKing add-ons.
+Do not edit or remove this comment if you want to protect the content below.
+*/
