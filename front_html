@@ -1,4 +1,4 @@
-<div class="prettify-flashcard theme-glassmorphism">
+<div class="prettify-flashcard theme-gelatin">
   <div class="prettify-deck">{{Deck}}</div>
   <div class="prettify-field prettify-field--front">{{edit::cloze:Text}}</div>
 </div>
@@ -26,9 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 <!-- version 2c54478 -->
-<div id="text">{{cloze:Text}}</div>
-
-<br>
 
 <!-- ##############  Text-to-speech  ##############
 replace the arrows/dashes from the statement below with double curly brackets-->
@@ -37,6 +34,8 @@ replace the arrows/dashes from the statement below with double curly brackets-->
 
 
 <script>
+
+
 // ############## USER CONFIGURATION START ##############
 // Auto flip to back when One by one mode.
 var autoflip = false
@@ -480,8 +479,6 @@ if (typeof(window.Persistence) === 'undefined') {
 </script>
 
 
-<!-- ANKING HYPERLINK IMAGE -->
-<a href="https://www.ankingmed.com"><img src="_AnKingIcon.png" alt="The AnKing" id="pic"></a>
 
 
 <script>
@@ -565,8 +562,22 @@ if (typeof(window.Persistence) === 'undefined') {
 </script>
 {{/Tags}}
 
+<!-- BEGIN ANKIHUB MODFICATIONS -->
+{{#ankihub_id}}
+    <div id="ankihub-note-id" hidden>{{ankihub_id}}</div>
+{{/ankihub_id}}
+<div id="ankihub-user-id" hidden>73792</div>
+<!-- END ANKIHUB MODFICATIONS -->
+
 <!--
 ANKIHUB_END
 Text below this comment will not be modified by AnkiHub or AnKing add-ons.
 Do not edit or remove this comment if you want to protect the content below.
 -->
+<script>
+  // This script adds a class to the body for special theme effects
+  // like the Aurora background.
+  if (document.querySelector('.theme-aurora')) {
+    document.body.classList.add('aurora-bg');
+  }
+</script>       
