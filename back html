@@ -1,4 +1,15 @@
-<div class="prettify-flashcard theme-glassmorphism">
+<!-- Prettify by @pranavdeshai: Cloze (back)
+
+Version: 0.1.3
+Readme: https://github.com/pranavdeshai/anki-prettify
+Links:
+- Reddit: https://www.reddit.com/user/Various_Breadfruit48
+- GitHub: https://github.com/pranavdeshai
+- Buy Me a Coffee: https://www.buymeacoffee.com/pranavdeshai
+- Ko-fi: https://ko-fi.com/pranavdeshai
+
+-->
+<div class="prettify-flashcard theme-gelatin">
   <div class="prettify-deck">{{Deck}}</div>
   <div class="prettify-field prettify-field--front">{{edit:cloze:Text}}</div>
   <div class="prettify-divider prettify-divider--answer"></div>
@@ -212,7 +223,7 @@ var ButtonAutoReveal = {
     "Pathoma" : false,
     "Boards and Beyond" : false,
     "Boards and Beyond Links" : false,
-    "First Aid" : true,
+    "First Aid" : false,
     "First Aid Links" : false,
     "Sketchy" : false,
     "Sketchy 2": false,
@@ -277,35 +288,9 @@ var minNumberOfClozes = 0;
 
 
 
-<span style="display: none">PSEUDO-FIELD #Boards and Beyond Links</span>
-<span id="hint-bb-links" class="hintBtn tagBasedHintBtn hidden" 
-  data-name="Boards and Beyond Links" data-resource-type-tag-part="#b&b" data-resource-slug="bb"
-  data-link-prefix="B&B"
->
-  <a href="#" class="hint" onclick="toggleHintBtn('hint-bb-links')"></a>
-  <button id="button-bb-links" class="button-general" onclick="toggleHintBtn('hint-bb-links')">
-    <img src="_b&b.icon.png" style="height:12px"> Boards and Beyond Links
-  </button>
-  <div dir="auto" id="bnb-links" class="hints" style="display: none;"></div>
-</span>
-<span style="display: none">PSEUDO-FIELD /Boards and Beyond Links</span>
 
 
-<span style="display: none">PSEUDO-FIELD #First Aid Links</span>
-<span id="hint-fa-links" class="hintBtn tagBasedHintBtn hidden" 
-  data-name="First Aid Links" data-resource-type-tag-part="#firstaid" data-resource-slug="fa"
-  data-link-prefix="FA4"
->
-  <a href="#" class="hint" onclick="toggleHintBtn('hint-fa-links')"></a>
-  <button id="button-fa-links" class="button-general" onclick="toggleHintBtn('hint-fa-links')">
-    <img src="_first-aid.icon_v2.1.png" style="height:12px"> First Aid Links
-  </button>
-  <div dir="auto" id="firstaid-links" class="hints" style="display: none;"></div>
-</span>
-<span style="display: none">PSEUDO-FIELD /First Aid Links</span>
 
-<!-- ANKING HYPERLINK IMAGE -->
-<a href="https://www.ankingmed.com"><img src="_AnKingIcon.png" alt="The AnKing" id="pic"></a>
 
 <!-- NOT-PERSISTING EVENT LISTENER -->
 <script>
@@ -1043,126 +1028,7 @@ if (typeof(window.Persistence) === 'undefined') {
   })()
 </script>
 
-<!-- WIKIPEDIA SEARCHES -->
-<div id="popup-container">
-  <button id="close-popup-btn" onclick="closePopup(true)">&times;</button>
-  <a id="open-wiki-btn" href="">&#8618;</a>
-  <div id="tc"></div>
-  <div id="fadebottom_v"></div>
-  <div id="ic"><img id="popup-image"></div>
-</div>
-<style>
-  #tc {
-    color: #222222;
-    position: absolute;
-    top: 16px;
-    margin: 0px;
-    left: 15px;
-    text-decoration: none;
-    height: 320px;
-    overflow: hidden;
-    overflow-y: scroll;
-    white-space: pre-wrap;
-    width: 300px;
-  }
-  
-  #tc p {
-    margin: 0px;
-  }
-  
-  #tc::-webkit-scrollbar {
-    display: none;
-  }
-  
-  #fadebottom_v {
-    height: 30px;
-    width: 300px;
-    background: -webkit-linear-gradient(270deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 1));
-    z-index: 111;
-    position: absolute;
-    bottom: 0px;
-    left: 15px;
-  }
-  
-  #hc {
-    color: #666;
-    font-weight: bold;
-  }
-  
-  #ic {
-    right: 0px;
-    top: 30px;
-    position: absolute;
-  }
-  
-  #ic img {
-    width: 160px;
-    height: auto;
-    object-fit: cover;
-    overflow: hidden;
-  }
-  
-  #popup-image {
-    width: 140px;
-    height: auto;
-  }
-  
-  #popup-container {
-    background: #fff;
-    position: absolute;
-    bottom: 30px;
-    right: 10px;
-    z-index: 110;
-    -webkit-box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.3), 0 0 1px 1px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.3), 0 0 1px 1px rgba(0, 0, 0, 0.05);
-    padding: 0;
-    display: none;
-    font-size: 17px;
-    line-height: 20px;
-    border-radius: 2px;
-    width: 480px;
-    height: 340px;
-    overflow: hidden;
-    font-family: Arial;
-    text-align: left;
-    border: 1px solid #d0d0d0;
-    border-radius: 5px;
-  }
-  
-  #close-popup-btn {
-    position: absolute;
-    top: 1px;
-    right: 5px;
-    width: 32px;
-    height: 32px;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 20px;
-    outline: none;
-    text-align: right;
-    z-index: 112;
-  }
-  
-  #open-wiki-btn {
-    position: absolute;
-    top: 10px;
-    right: 30px;
-    width: 15px;
-    height: 32px;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222222;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 17px;
-    outline: none;
-    text-align: left;
-    z-index: 112;
-  }
-</style>
+
 
 <script>
   function getSummaryFor(word) {
@@ -1313,7 +1179,6 @@ position: fixed doesn't work on AnkiMobile, so the button is just below the cont
 </style>
 
 <script>
-
     if(document.querySelector("html").classList.contains("android")) {
         // Add a margin to the bottom of the card content so that the button doesn't
         // overlap the content.
@@ -1321,29 +1186,6 @@ position: fixed doesn't work on AnkiMobile, so the button is just below the cont
         var button = document.querySelector('.ankihub-view-note');
         container.style.marginBottom = 2 * button.offsetHeight + "px";
     }
-(function() {
-  // Introduce a small delay (e.g., 50-100 milliseconds)
-  setTimeout(function() {
-    const cardElement = document.querySelector('.prettify-flashcard');
-    if (cardElement) {
-      // Remove class first to ensure re-trigger if already present from a quick flip or re-render
-      cardElement.classList.remove('card-bounce-animation');
-      // Force reflow to help ensure animation restarts if class was just re-added
-      void cardElement.offsetWidth; 
-      // Add class to trigger animation
-      cardElement.classList.add('card-bounce-animation');
-
-      // Remove the class after the animation completes so it can be triggered again
-      // if the card is shown again (e.g. after editing or if Anki reuses the webview).
-      // The duration should match the CSS animation-duration (0.5s).
-      setTimeout(() => {
-        if (cardElement) { // Check if element still exists
-          cardElement.classList.remove('card-bounce-animation');
-        }
-      }, 500); // Duration of the bounce animation in milliseconds
-    }
-  }, 100); // Delay in milliseconds (e.g., 100ms)
-})();
 </script>
 
 {{/ankihub_id}}
