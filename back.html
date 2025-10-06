@@ -1,0 +1,263 @@
+<div class="prettify-flashcard theme-glassmorphism" data-anking-side="back">
+  <div class="prettify-deck">{{Deck}}</div>
+  <div class="prettify-field prettify-field--front">{{edit:cloze:Text}}</div>
+  <div class="prettify-divider prettify-divider--answer"></div>
+{{#Extra}}
+  <div class="prettify-field prettify-field--extra-content"> {{edit:Extra}} </div>
+  <div class="prettify-divider"></div> {{/Extra}}
+
+
+{{^One by one}}
+<!--tts en_US voices=Apple_Samantha,Microsoft_Zira speed=1.4:cloze-only:Text-->
+{{/One by one}}
+
+
+<!-- BUTTON FIELDS -->
+<!-- ClOZE ONE BY ONE BUTTONS -->
+
+<div id="one-by-one" style="display: none;">{{One by one}}</div>
+
+<div id="1by1-btns" style="display: none;">
+  <button id="button-reveal-next" class="button-general" onclick="revealNextCloze()">Reveal Next</button>
+  <button id="button-toggle-all" class="button-general" onclick="toggleAllCloze()">Toggle All</button>
+</div>
+
+<!-- OME banner (desktop) -->
+<div class="banner-ome">
+  <!--{{#OME}}{{OME}}{{/OME}}-->
+</div>
+
+{{#Lecture Notes}}
+<span id = "hint-ln" class="hintBtn" data-name="Lecture Notes">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-ln')"></a>
+  <button id="button-ln" class="button-general" onclick="toggleHintBtn('hint-ln')">
+    <img src="_AnKingIcon.png" style="height:12px"> Lecture Notes
+  </button>
+  <div dir="auto" id="notes" class="hints" style="display: none;">{{edit:Lecture Notes}}</div>
+</span>
+{{/Lecture Notes}}
+
+{{#Missed Questions}}
+<span id = "hint-mq" class="hintBtn" data-name="Missed Questions">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-mq')"></a>
+  <button id="button-mq" class="button-general" onclick="toggleHintBtn('hint-mq')">
+    <img src="_AnKingIcon.png" style="height:12px"> Missed Questions
+  </button>
+  <div dir="auto" id="missed" class="hints" style="display: none;">{{edit:Missed Questions}}</div>
+</span>
+{{/Missed Questions}}
+
+{{#Pathoma}}
+<span id = "hint-pat" class="hintBtn" data-name="Pathoma">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-pat')"></a>
+  <button id="button-pat" class="button-general" onclick="toggleHintBtn('hint-pat')">
+    <img src="_pathoma.icon.png" style="height:12px"> 
+  </button>
+  <div dir="auto" id="pathoma" class="hints" style="display: none;">{{edit:Pathoma}}</div>
+</span>
+{{/Pathoma}}
+
+{{#Boards and Beyond}}
+<span id = "hint-bb" class="hintBtn" data-name="Boards and Beyond">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-bb')"></a>
+  <button id="button-bb" class="button-general" onclick="toggleHintBtn('hint-bb')">
+    <img src="_b&b.icon.png" style="height:12px"> Boards and Beyond
+  </button>
+  <div dir="auto" id="bnb" class="hints" style="display: none;">{{edit:Boards and Beyond}}</div>
+</span>
+{{/Boards and Beyond}}
+
+{{#First Aid}}
+<span id = "hint-fa" class="hintBtn" data-name="First Aid">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-fa')"></a>
+  <button id="button-fa" class="button-general" onclick="toggleHintBtn('hint-fa')">
+    <img src="_first-aid.icon_v2.1.png" style="height:12px"> First Aid
+  </button>
+  <div dir="auto" id="firstaid" class="hints" style="display: none;">{{edit:First Aid}}</div>
+</span>
+{{/First Aid}}
+
+{{#Sketchy}}
+<span id = "hint-sketchy" class="hintBtn" data-name="Sketchy">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-sketchy')"></a>
+  <button id="button-sketchy" class="button-general" onclick="toggleHintBtn('hint-sketchy')">
+    <img src="_sketchy.icon.png" style="height:12px"> Sketchy
+  </button>
+  <div dir="auto" id="sketchy" class="hints" style="display: none;">{{edit:Sketchy}}</div>
+</span>
+{{/Sketchy}}
+
+{{#Sketchy 2}}
+<span id = "hint-sketchy2" class="hintBtn" data-name="Sketchy 2">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-sketchy2')"></a>
+  <button id="button-sketchy2" class="button-general" onclick="toggleHintBtn('hint-sketchy2')">
+    <img src="_sketchy.icon.png" style="height:12px"> Sketchy 2
+  </button>
+  <div dir="auto" id="sketchy2" class="hints" style="display: none;">{{edit:Sketchy 2}}</div>
+</span>
+{{/Sketchy 2}}
+
+{{#Sketchy Extra}}
+<span id = "hint-sketchyextra" class="hintBtn" data-name="Sketchy Extra">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-sketchyextra')"></a>
+  <button id="button-sketchyextra" class="button-general" onclick="toggleHintBtn('hint-sketchyextra')">
+    <img src="_sketchy.icon.png" style="height:12px"> Sketchy Extra
+  </button>
+  <div dir="auto" id="sketchyextra" class="hints" style="display: none;">{{edit:Sketchy Extra}}</div>
+</span>
+{{/Sketchy Extra}}
+
+{{#Picmonic}}
+<span id = "hint-picmonic" class="hintBtn" data-name="Picmonic">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-picmonic')"></a>
+  <button id="button-picmonic" class="button-general" onclick="toggleHintBtn('hint-picmonic')">
+    <img src="_picmonic.icon.png" style="height:12px"> Picmonic
+  </button>
+  <div dir="auto" id="picmonic" class="hints" style="display: none;">{{edit:Picmonic}}</div>
+</span>
+{{/Picmonic}}
+
+<!--{{#Pixorize}}
+<span id = "hint-pixorize" class="hintBtn" data-name="Pixorize">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-pixorize')"></a>
+  <button id="button-pixorize" class="button-general" onclick="toggleHintBtn('hint-pixorize')">
+    <img src="_pixorize.png" style="height:12px"> Pixorize
+  </button>
+  <div dir="auto" id="pixorize" class="hints" style="display: none;">{{edit:Pixorize}}</div>
+</span>
+{{/Pixorize}}-->
+
+<!--{{#Physeo}}
+<span id = "hint-physeo" class="hintBtn" data-name="Physeo">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-physeo')"></a>
+  <button id="button-physeo" class="button-general" onclick="toggleHintBtn('hint-physeo')">
+    <img src="_physeologo.icon.png" style="height:12px"> 
+  </button>
+  <div dir="auto" id="physeo" class="hints" style="display: none;">{{edit:Physeo}}</div>
+</span>
+{{/Physeo}}-->
+
+{{#Bootcamp}}
+<span id = "hint-bootcamp" class="hintBtn" data-name="Bootcamp">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-bootcamp')"></a>
+  <button id="button-bootcamp" class="button-general" onclick="toggleHintBtn('hint-bootcamp')">
+    <img src="_bootcamp.png" style="height:12px"> Bootcamp
+  </button>
+  <div dir="auto" id="bootcamp" class="hints" style="display: none;">{{edit:Bootcamp}}</div>
+</span>
+{{/Bootcamp}}
+
+<!-- OME field (only shows on mobile) -->
+{{#OME}}
+  <span id="hint-ome" class="hintBtn" data-name="OME">
+    <a onclick="toggleHintBtn('hint-ome')"></a>
+    <button id="button-ome" class="button-general" onclick="toggleHintBtn('hint-ome')">
+      <img src="_omelogo.icon.png"> OnlineMedEd
+    </button>
+    <div id="ome" class="hints" style="display: none;">{{edit:OME}}</div>
+  </span>
+{{/OME}}
+
+{{#Additional Resources}}
+<span id = "hint-ar" class="hintBtn" data-name="Additional Resources">
+  <a href="#" class="hint" onclick="toggleHintBtn('hint-ar')"></a>
+  <button id="button-ar" class="button-general" onclick="toggleHintBtn('hint-ar')">
+    <img src="_AnKingIcon.png" style="height:12px"> Additional Resources
+  </button>
+  <div dir="auto" id="additional" class="hints" style="display: none;">{{edit:Additional Resources}}</div>
+</span>
+{{/Additional Resources}}
+</div>
+
+
+<!-- version 2c54478 -->
+<!-- NOT-PERSISTING EVENT LISTENER -->
+<!-- Shortcut Matcher Function -->
+<!-- CLICKABLE COLORFUL TAGS -->
+{{#Tags}}
+<div id="tags-container">{{clickable::Tags}}</div>
+{{/Tags}}
+
+<!-- HINT BUTTONS SETUP -->
+<!-- Credit: Anki Persistence, MIT: https://github.com/SimonLammer/anki-persistence/blob/8190116c95df202773aa692c5e9ae704fb407bc9/script.js -->
+
+<!-- AUTOFLIP BACK SCRIPT -->
+<!-- CLOZE ONE BY ONE SCRIPT -->
+<style>
+  .cloze-replacer:hover {
+    cursor: pointer;
+  }
+  .cloze-hidden {
+    display: none;
+  }
+  .cloze-replacer .hidden {
+    display: none;
+  }
+  #extra.hidden {
+    display: none;
+  }
+</style>
+
+<!-- Credit: Code for selective 1b1 clozes is adapted from the Ankizin project: https://ankiweb.net/shared/info/2058530482 -->
+
+<!-- ANKIMOBILE USER ACTIONS -->
+<!-- IMAGE BLUR -->
+<!-- BEGIN ANKIHUB MODFICATIONS -->
+{{#ankihub_id}}
+<a class='ankihub-view-note'
+    href='https://app.ankihub.net/decks/notes/{{ankihub_id}}'>
+    View Note on AnkiHub
+</a>
+
+<style>
+.ankihub-view-note {
+    display: none;
+}
+
+.mobile .ankihub-view-note
+  {
+    display: block;
+    left: 50%;
+    margin-right: -50%;
+    padding: 8px;
+    border-radius: 50px;
+    background-color: #cde3f8;
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+}
+
+/* AnkiDroid (Android)
+The button is fixed to the bottom of the screen. */
+.android .ankihub-view-note {
+    position: fixed;
+    bottom: 5px;
+    transform: translate(-50%, -50%);
+}
+
+/* AnkiMobile (IPhone)
+position: fixed doesn't work on AnkiMobile, so the button is just below the content instead. */
+.iphone .ankihub-view-note,
+.ipad .ankihub-view-note {
+    position: relative;
+    transform: translate(-50%, 0);
+    width: fit-content;
+    margin-top: 20px;
+}
+</style>
+
+{{/ankihub_id}}
+<!-- END ANKIHUB MODFICATIONS -->
+
+<!--
+ANKIHUB_END
+Text below this comment will not be modified by AnkiHub or AnKing add-ons.
+Do not edit or remove this comment if you want to protect the content below.
+-->
+<script src="anking-config.js"></script>
+<script src="anking-shared.js"></script>
+<script type="module" src="https://content-gateway.us.production.amboss.com/amboss.js" data-addon="eyJhbm9uSWQiOiAiZDQ5ODYzOTItNjdhOC00YTFhLTg1MzgtNWUxMWZmMmJkODgyIiwgInVzZXJJZCI6ICJLekNmVUZ1b2EiLCAidG9rZW4iOiAiZXlKaGJHY2lPaUpTVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFM05qRTBPRFkzTkRBc0ltbHpjeUk2SWtGTlFrOVRVeUlzSW5OMVlpSTZJa3Q2UTJaVlJuVnZZU0lzSW1saGRDSTZNVGMxT0RnNU5EYzBNSDAuS01VRmcwdDhwVjJpU0Jmbl95bUtpWURFcG5sTHJHeFB5dUtNSlBMUFJQZjAyVUtjUzF0QjMtMzVFT0JGeTJqek04a050YW9GdG5PMnJIMzA2Yk1OMnVqS203aklFQURGSVIyRmtURnZzZ21Ld3pJNnR5em5Bcmh1MWdLRFp3U0czaV81bWVKTEFvaVBraElnUnk4UXRFOFFZMFgxb29mZGE0cHo3d3hwSk85M2NHWmNWcFpLYXpPdDdhcWdnZTNIcmU0UGdVUE83elcxZG42bVB1bHIxdEl2WFFsYzBCRERYWDQ2WDVyaGFXR3ZuaV9ubEI3ZWVpUXpIb0pPZWd6Sy1QZGZvbzh3YzBVTUZjRkZTS2ZrM1RzQVlWd19XUXh4di1MRmdTdEk0RmVZQlZUTmdHNjdValVBRlpia2lsQUJ4aHlMVWw3TUh6RWNuX1ZXc0ZDS0NRIn0=" id="amboss-snippet"></script>
+
+
+
+
