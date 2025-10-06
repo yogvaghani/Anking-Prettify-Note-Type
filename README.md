@@ -22,6 +22,23 @@ This repository currently only contains the local files that ship with the note 
 
 After the first push you can continue updating GitHub with `git push` whenever you commit new changes locally.
 
+### Customising background artwork
+
+Light and dark mode can use different background images without touching the templates. Edit `anking-config.js` and update
+`themePalette.backgrounds`:
+
+```js
+themePalette: {
+  backgrounds: {
+    light: 'my-light-image.jpg',
+    dark: 'my-dark-image.jpg'
+  }
+}
+```
+
+The runtime will automatically load the right image and adapt the palette colours for contrast. You can also swap images on the
+fly from the card browser console by running `AnKingSetBackgrounds({ light: '...', dark: '...' })`.
+
 Dark Mode
 ![image](https://github.com/user-attachments/assets/a200991a-872c-49d8-9a8c-7bb0d0d85244)
 ![image](https://github.com/user-attachments/assets/172d66a4-d857-474f-8cd9-73af267f005c)
