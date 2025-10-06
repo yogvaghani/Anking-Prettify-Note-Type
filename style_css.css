@@ -162,17 +162,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--anki-background-overlay, transparent);
-  z-index: -1;
-}
 body:not(.night_mode) {
   --anki-background-image: var(--anki-background-image-light, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)));
+  --anki-background-overlay: transparent;
+  --anki-card-overlay: var(--anki-card-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)));
   --anki-background-color: var(--anki-background-color-light, #f0f5ff);
 
   --text-primary: var(--c-text-primary-light);
@@ -214,7 +207,8 @@ body:not(.night_mode) {
 }
 body.night_mode {
   --anki-background-image: var(--anki-background-image-dark, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-dark, rgba(4, 10, 24, 0.45));
+  --anki-background-overlay: transparent;
+  --anki-card-overlay: var(--anki-card-overlay-dark, linear-gradient(180deg, rgba(4, 10, 24, 0.6), rgba(4, 10, 24, 0.35)));
   --anki-background-color: var(--anki-background-color-dark, #03060f);
 
   --text-primary: var(--c-text-primary-dark);
@@ -295,6 +289,19 @@ body.night_mode {
   backdrop-filter: var(--theme-card-backdrop, none);
   -webkit-backdrop-filter: var(--theme-card-backdrop, none);
   outline: var(--theme-card-outline, transparent);
+}
+.prettify-flashcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--anki-card-overlay, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.prettify-flashcard > * {
+  position: relative;
+  z-index: 1;
 }
 
 .prettify-flashcard ::selection { background-color: var(--accent-2); color: white; }
@@ -1024,24 +1031,6 @@ body.night_mode u {
 .is-windows body {
   overflow: auto !important;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--anki-background-overlay, transparent);
-  z-index: -1;
-}
-body:not(.night_mode) {
-  --anki-background-image: var(--anki-background-image-light, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)));
-  --anki-background-color: var(--anki-background-color-light, #f0f5ff);
-}
-body.night_mode {
-  --anki-background-image: var(--anki-background-image-dark, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-dark, rgba(4, 10, 24, 0.45));
-  --anki-background-color: var(--anki-background-color-dark, #03060f);
-}
 
 /* Ensure the review container is never left hidden */
 .is-windows #qa {
@@ -1064,24 +1053,6 @@ body.night_mode {
    Prefer a scrolling background on Windows to keep the layer stable. */
 .is-windows body {
   background-attachment: scroll !important;
-}
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--anki-background-overlay, transparent);
-  z-index: -1;
-}
-body:not(.night_mode) {
-  --anki-background-image: var(--anki-background-image-light, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)));
-  --anki-background-color: var(--anki-background-color-light, #f0f5ff);
-}
-body.night_mode {
-  --anki-background-image: var(--anki-background-image-dark, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-dark, rgba(4, 10, 24, 0.45));
-  --anki-background-color: var(--anki-background-color-dark, #03060f);
 }
 
 /* When using heavy glass skins, give text a tiny edge for busy wallpapers */

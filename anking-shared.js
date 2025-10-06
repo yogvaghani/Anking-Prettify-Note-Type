@@ -14,7 +14,7 @@
       accent: '#4d8bff',
       text: '#152238',
       glow: '#ffffff',
-      overlay: 'linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0))',
+      overlay: 'linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0))',
       background: 'starsky.jpeg'
     },
     dark: {
@@ -22,7 +22,7 @@
       accent: '#7dafff',
       text: '#e6efff',
       glow: '#2bc1ff',
-      overlay: 'rgba(4, 10, 24, 0.45)',
+      overlay: 'linear-gradient(180deg, rgba(4, 10, 24, 0.6), rgba(4, 10, 24, 0.35))',
       background: 'starsky.jpeg'
     }
   };
@@ -126,7 +126,7 @@
       accent,
       text,
       glow,
-      overlay: entry.overlay,
+      overlay: entry.overlay ? normalizeOverlay(entry.overlay) : null,
       background: entry.background
     };
   }
@@ -703,18 +703,73 @@ if (typeof(window.Persistence) === 'undefined') {
   }
 }
 
+  const ankingEventDispatchRegistry = new WeakMap();
+
   if (window.ankingEventListeners) {
     for (const listener of ankingEventListeners) {
-      const type = listener[0]
-      const handler = listener[1]
-      document.removeEventListener(type, handler)
+      const type = listener.type || listener[0];
+      const handler = listener.handler || listener[1];
+      const targets = Array.isArray(listener.targets) ? listener.targets : [];
+      if (targets.length) {
+        for (const targetEntry of targets) {
+          const target = targetEntry && targetEntry.target ? targetEntry.target : targetEntry;
+          const wrapped = targetEntry && targetEntry.wrapped ? targetEntry.wrapped : handler;
+          const capture = targetEntry && typeof targetEntry.capture === 'boolean' ? targetEntry.capture : false;
+          if (target && typeof target.removeEventListener === 'function') {
+            try {
+              target.removeEventListener(type, wrapped, capture);
+            } catch (err) {}
+          }
+        }
+      } else if (document && typeof document.removeEventListener === 'function') {
+        try {
+          document.removeEventListener(type, handler);
+        } catch (err) {}
+      }
     }
   }
   window.ankingEventListeners = []
 
-  window.ankingAddEventListener = function(type, handler) {
-    document.addEventListener(type, handler)
-    window.ankingEventListeners.push([type, handler])
+  window.ankingAddEventListener = function(type, handler, options) {
+    const entry = { type, handler, targets: [] };
+    entry[0] = type;
+    entry[1] = handler;
+    const seen = new Set();
+
+    const register = (target) => {
+      if (!target || seen.has(target) || typeof target.addEventListener !== 'function') {
+        return;
+      }
+      const capture = options && typeof options.capture === 'boolean'
+        ? options.capture
+        : type.startsWith('key');
+      const wrapped = function(evt) {
+        let handled = ankingEventDispatchRegistry.get(evt);
+        if (!handled) {
+          handled = new Set();
+          ankingEventDispatchRegistry.set(evt, handled);
+        }
+        if (handled.has(handler)) {
+          return;
+        }
+        handled.add(handler);
+        handler.call(this, evt);
+      };
+      target.addEventListener(type, wrapped, capture);
+      entry.targets.push({ target, wrapped, capture });
+      seen.add(target);
+    };
+
+    if (options && Array.isArray(options.targets) && options.targets.length) {
+      options.targets.forEach(register);
+    } else {
+      register(document);
+      register(window);
+      register(document && document.body);
+      register(document && document.getElementById && document.getElementById('qa'));
+    }
+
+    window.ankingEventListeners.push(entry);
   }
 
   var specialCharCodes = {
