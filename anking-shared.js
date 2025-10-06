@@ -28,38 +28,38 @@
   };
   const paletteConfig = (window.AnKingConfig && window.AnKingConfig.themePalette) || {};
   const backgroundsConfig = paletteConfig.backgrounds || {};
-  const paletteLight = buildPalette(Object.assign({}, defaultPalette.light, paletteConfig.light || {}));
-  const paletteDark = buildPalette(Object.assign({}, defaultPalette.dark, paletteConfig.dark || {}));
+  let paletteLight = buildPalette(Object.assign({}, defaultPalette.light, paletteConfig.light || {}));
+  let paletteDark = buildPalette(Object.assign({}, defaultPalette.dark, paletteConfig.dark || {}));
   const backgrounds = {
     light: backgroundsConfig.light || paletteLight.background || defaultPalette.light.background,
     dark: backgroundsConfig.dark || paletteDark.background || defaultPalette.dark.background
   };
 
-  setVar('--anki-background-color-light', paletteLight.base.hex);
-  setVar('--anki-background-color-dark', paletteDark.base.hex);
-  if (paletteLight.overlay) {
-    setVar('--anki-background-overlay-light', paletteLight.overlay);
+  const cardElement = document.querySelector('.prettify-flashcard');
+  if (cardElement && cardElement.dataset) {
+    backgrounds.light = cardElement.dataset.ankiBackgroundLight || backgrounds.light;
+    backgrounds.dark = cardElement.dataset.ankiBackgroundDark || backgrounds.dark;
   }
-  if (paletteDark.overlay) {
-    setVar('--anki-background-overlay-dark', paletteDark.overlay);
-  }
-  setVar('--anki-background-image-light', "url('" + backgrounds.light + "')");
-  setVar('--anki-background-image-dark', "url('" + backgrounds.dark + "')");
 
-  setVar('--c-text-primary-light', toHslString(paletteLight.text.hsl));
-  setVar('--c-text-secondary-light', toHslString(lightenHSL(paletteLight.text.hsl, 12)));
-  setVar('--c-text-primary-dark', toHslString(paletteDark.text.hsl));
-  setVar('--c-text-secondary-dark', toHslString(lightenHSL(paletteDark.text.hsl, 10)));
+  updatePaletteStatics();
 
   const applyPalette = () => {
     const body = document.body;
     if (!body) return;
     const mode = body.classList.contains('night_mode') ? 'dark' : 'light';
     const palette = mode === 'dark' ? paletteDark : paletteLight;
-    const backgroundUrl = mode === 'dark' ? backgrounds.dark : backgrounds.light;
-    setVar('--anki-background-image', "url('" + backgroundUrl + "')");
+    const backgroundValue = mode === 'dark' ? backgrounds.dark : backgrounds.light;
+    setVar('--anki-background-image', toCssBackground(backgroundValue));
     setVar('--anki-background-color', palette.base.hex);
-    updateBaseVariables(palette, mode);\n    setVar('--anki-palette-base', palette.base.hex);\n    setVar('--anki-palette-accent', palette.accent.hex);\n    setVar('--anki-palette-text', palette.text.hex);\n    setVar('--anki-palette-glow', palette.glow.hex);
+    const overlayValue = palette.overlay || (mode === 'dark'
+      ? 'rgba(4, 10, 24, 0.45)'
+      : 'linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0))');
+    setVar('--anki-background-overlay', overlayValue);
+    updateBaseVariables(palette, mode);
+    setVar('--anki-palette-base', palette.base.hex);
+    setVar('--anki-palette-accent', palette.accent.hex);
+    setVar('--anki-palette-text', palette.text.hex);
+    setVar('--anki-palette-glow', palette.glow.hex);
   };
 
   window.__ankingApplyPalette = applyPalette;
@@ -88,6 +88,33 @@
   } else {
     ensureApply();
   }
+
+  Promise.all([
+    adaptPaletteToBackground('light', backgrounds.light),
+    adaptPaletteToBackground('dark', backgrounds.dark)
+  ]).catch(() => {});
+
+  window.AnKingSetBackgrounds = function(nextBackgrounds) {
+    if (!nextBackgrounds) {
+      return;
+    }
+    if (nextBackgrounds.light) {
+      backgrounds.light = nextBackgrounds.light;
+    }
+    if (nextBackgrounds.dark) {
+      backgrounds.dark = nextBackgrounds.dark;
+    }
+    updatePaletteStatics();
+    if (document.body) {
+      applyPalette();
+    }
+    adaptPaletteToBackground('light', backgrounds.light);
+    adaptPaletteToBackground('dark', backgrounds.dark);
+  };
+
+  window.AnKingGetBackgrounds = function() {
+    return { light: backgrounds.light, dark: backgrounds.dark };
+  };
 
   function buildPalette(entry) {
     const base = parseColor(entry.base, '#ffffff');
@@ -127,6 +154,297 @@
     setVar('--p-italic-fg-dark', adjustHexLightness(palette.accent.hex, 18));
     setVar('--p-underline-fg-dark', adjustHexLightness(palette.accent.hex, -18));
     setVar('--p-bold-italic-fg-dark', adjustHexLightness(palette.accent.hex, 34));
+  }
+
+  function updatePaletteStatics() {
+    setVar('--anki-background-color-light', paletteLight.base.hex);
+    setVar('--anki-background-color-dark', paletteDark.base.hex);
+    if (paletteLight.overlay) {
+      setVar('--anki-background-overlay-light', paletteLight.overlay);
+    }
+    if (paletteDark.overlay) {
+      setVar('--anki-background-overlay-dark', paletteDark.overlay);
+    }
+    setVar('--anki-background-image-light', toCssBackground(backgrounds.light));
+    setVar('--anki-background-image-dark', toCssBackground(backgrounds.dark));
+    setVar('--c-text-primary-light', toHslString(paletteLight.text.hsl));
+    setVar('--c-text-secondary-light', toHslString(lightenHSL(paletteLight.text.hsl, 12)));
+    setVar('--c-text-primary-dark', toHslString(paletteDark.text.hsl));
+    setVar('--c-text-secondary-dark', toHslString(lightenHSL(paletteDark.text.hsl, 10)));
+  }
+
+  function adaptPaletteToBackground(mode, backgroundValue) {
+    const source = stripUrlValue(backgroundValue);
+    if (!source || !isImageSource(source)) {
+      return Promise.resolve(null);
+    }
+    return analyzeImagePalette(source, mode).then((derived) => {
+      if (!derived) {
+        return null;
+      }
+      const target = mode === 'dark' ? paletteDark : paletteLight;
+      if (derived.base) target.base = derived.base;
+      if (derived.accent) target.accent = derived.accent;
+      if (derived.text) target.text = derived.text;
+      if (derived.glow) target.glow = derived.glow;
+      if (derived.overlay) target.overlay = derived.overlay;
+      updatePaletteStatics();
+      if (document.body) {
+        applyPalette();
+      }
+      return derived;
+    }).catch((err) => {
+      console.warn('AnKing Prettify: unable to derive palette from background', err);
+      return null;
+    });
+  }
+
+  function analyzeImagePalette(source, mode) {
+    return loadImage(source).then((img) => {
+      const imageData = sampleImage(img, 96);
+      if (!imageData) {
+        return null;
+      }
+      const stats = computeImageStats(imageData);
+      if (!stats) {
+        return null;
+      }
+
+      const averageHex = rgbToHex(stats.average.r, stats.average.g, stats.average.b);
+      let baseColor = parseHexColor(averageHex);
+      if (!baseColor) {
+        return null;
+      }
+      let baseH = baseColor.hsl.h;
+      let baseS = baseColor.hsl.s;
+      let baseL = baseColor.hsl.l;
+      if (mode === 'light') {
+        baseS = clamp(baseS * 0.75 + 12, 18, 72);
+        baseL = clamp((baseL + 70) / 1.2, 55, 90);
+      } else {
+        baseS = clamp(baseS * 0.9 + 8, 18, 85);
+        baseL = clamp((baseL + 30) / 1.5, 12, 42);
+      }
+      baseColor = parseHexColor(hslToHex(baseH, baseS, baseL));
+
+      const accentCandidate = stats.vibrant || stats.average;
+      let accentColor = parseHexColor(rgbToHex(accentCandidate.r, accentCandidate.g, accentCandidate.b)) || baseColor;
+      let accentH = accentColor.hsl.h;
+      let accentS = accentColor.hsl.s;
+      let accentL = accentColor.hsl.l;
+      if (mode === 'light') {
+        accentS = clamp(accentS + 22, 28, 96);
+        accentL = clamp(accentL + 6, 28, 76);
+      } else {
+        accentS = clamp(accentS + 24, 34, 98);
+        accentL = clamp(accentL + 4, 20, 64);
+      }
+      accentColor = parseHexColor(hslToHex(accentH, accentS, accentL)) || accentColor;
+      if (contrastRatioColors(baseColor, accentColor) < 1.6) {
+        const adjustAmount = mode === 'light' ? -18 : 18;
+        accentColor = parseHexColor(adjustHexLightness(accentColor.hex, adjustAmount)) || accentColor;
+      }
+
+      const baseLum = getRelativeLuminance(baseColor.rgb.r, baseColor.rgb.g, baseColor.rgb.b);
+      const textSeed = baseLum > 0.55 ? (stats.dark || { r: 24, g: 32, b: 46 }) : (stats.light || { r: 240, g: 244, b: 255 });
+      let textColor = parseHexColor(rgbToHex(textSeed.r, textSeed.g, textSeed.b));
+      if (!textColor) {
+        textColor = parseHexColor(baseLum > 0.55 ? '#101828' : '#f7f9ff');
+      }
+      textColor = ensureContrast(baseColor, textColor, baseLum > 0.55 ? 'dark' : 'light');
+
+      const glowHex = adjustHexLightness(accentColor.hex, mode === 'light' ? 32 : 42);
+      const glowColor = parseHexColor(glowHex) || accentColor;
+
+      const overlay = mode === 'light'
+        ? buildLightOverlay(baseColor, accentColor)
+        : buildDarkOverlay(baseColor, accentColor);
+
+      return { base: baseColor, accent: accentColor, text: textColor, glow: glowColor, overlay };
+    }).catch(() => null);
+  }
+
+  function buildLightOverlay(baseColor, accentColor) {
+    const accent = accentColor.rgb;
+    const overlayTop = 'rgba(255, 255, 255, 0.58)';
+    const overlayBottom = 'rgba(' + Math.round(accent.r) + ', ' + Math.round(accent.g) + ', ' + Math.round(accent.b) + ', 0.18)';
+    return 'linear-gradient(180deg, ' + overlayTop + ' 0%, ' + overlayBottom + ' 100%)';
+  }
+
+  function buildDarkOverlay(baseColor, accentColor) {
+    const base = baseColor.rgb;
+    return 'rgba(' + Math.round(base.r) + ', ' + Math.round(base.g) + ', ' + Math.round(base.b) + ', 0.45)';
+  }
+
+  function loadImage(source) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.decoding = 'async';
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      try {
+        img.src = source;
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  function sampleImage(img, maxSize) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) {
+      return null;
+    }
+    const ratio = Math.max(img.naturalWidth, img.naturalHeight) / Math.max(maxSize, 32);
+    const width = Math.max(1, Math.round(img.naturalWidth / ratio));
+    const height = Math.max(1, Math.round(img.naturalHeight / ratio));
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(img, 0, 0, width, height);
+    try {
+      return context.getImageData(0, 0, width, height);
+    } catch (err) {
+      console.warn('AnKing Prettify: unable to sample background image', err);
+      return null;
+    }
+  }
+
+  function computeImageStats(imageData) {
+    if (!imageData || !imageData.data) {
+      return null;
+    }
+    const data = imageData.data;
+    let count = 0;
+    let sumR = 0;
+    let sumG = 0;
+    let sumB = 0;
+    let vibrant = null;
+    let highestSat = 0;
+    let light = null;
+    let darkest = null;
+    let highestLum = -1;
+    let lowestLum = 2;
+    for (let i = 0; i < data.length; i += 4) {
+      const alpha = data[i + 3] / 255;
+      if (alpha < 0.1) {
+        continue;
+      }
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      sumR += r;
+      sumG += g;
+      sumB += b;
+      count++;
+      const hsl = rgbToHsl(r, g, b);
+      const lum = getRelativeLuminance(r, g, b);
+      if (hsl.s > highestSat && lum > 0.12 && lum < 0.92) {
+        highestSat = hsl.s;
+        vibrant = { r, g, b, hsl };
+      }
+      if (lum > highestLum) {
+        highestLum = lum;
+        light = { r, g, b, hsl };
+      }
+      if (lum < lowestLum) {
+        lowestLum = lum;
+        darkest = { r, g, b, hsl };
+      }
+    }
+    if (!count) {
+      return null;
+    }
+    const average = { r: sumR / count, g: sumG / count, b: sumB / count };
+    if (!vibrant) {
+      const avgHsl = rgbToHsl(average.r, average.g, average.b);
+      vibrant = { r: average.r, g: average.g, b: average.b, hsl: avgHsl };
+    }
+    return { average, vibrant, light, dark: darkest };
+  }
+
+  function ensureContrast(baseColor, candidateColor, tone) {
+    let current = candidateColor || parseHexColor(tone === 'dark' ? '#101828' : '#f7f9ff');
+    if (!current) {
+      current = parseHexColor(tone === 'dark' ? '#101828' : '#f7f9ff');
+      if (!current) {
+        return candidateColor;
+      }
+    }
+    let ratio = contrastRatioColors(baseColor, current);
+    let iterations = 0;
+    const delta = tone === 'dark' ? -6 : 6;
+    while (ratio < 4.2 && iterations < 10) {
+      const adjusted = adjustHexLightness(current.hex, delta);
+      const parsed = parseHexColor(adjusted);
+      if (!parsed) {
+        break;
+      }
+      current = parsed;
+      ratio = contrastRatioColors(baseColor, current);
+      iterations++;
+    }
+    return current;
+  }
+
+  function contrastRatioColors(colorA, colorB) {
+    const lumA = getRelativeLuminance(colorA.rgb.r, colorA.rgb.g, colorA.rgb.b);
+    const lumB = getRelativeLuminance(colorB.rgb.r, colorB.rgb.g, colorB.rgb.b);
+    return contrastRatio(lumA, lumB);
+  }
+
+  function contrastRatio(l1, l2) {
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  function getRelativeLuminance(r, g, b) {
+    const srgb = [r, g, b].map((value) => {
+      const channel = value / 255;
+      return channel <= 0.03928 ? channel / 12.92 : Math.pow((channel + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+  }
+
+  function toCssBackground(value) {
+    if (!value && value !== 0) {
+      return '';
+    }
+    const raw = value.toString().trim();
+    if (!raw) {
+      return '';
+    }
+    if (/^(url\(|linear-gradient\(|radial-gradient\(|conic-gradient\(|repeating-linear-gradient\(|repeating-radial-gradient\(|var\(|#)/i.test(raw)) {
+      return raw;
+    }
+    if (raw.startsWith('data:image')) {
+      return "url('" + raw + "')";
+    }
+    return "url('" + raw.replace(/'/g, "\\'") + "')";
+  }
+
+  function stripUrlValue(value) {
+    if (!value && value !== 0) {
+      return '';
+    }
+    const raw = value.toString().trim();
+    const match = raw.match(/^url\((.*)\)$/i);
+    if (match) {
+      return match[1].trim().replace(/^['"]|['"]$/g, '');
+    }
+    return raw.replace(/^['"]|['"]$/g, '');
+  }
+
+  function isImageSource(value) {
+    if (!value) {
+      return false;
+    }
+    if (value.startsWith('data:image')) {
+      return true;
+    }
+    return /\.(png|jpe?g|gif|bmp|webp|avif|svg)(\?.*)?$/i.test(value);
   }
 
   function parseColor(value, fallbackHex) {
