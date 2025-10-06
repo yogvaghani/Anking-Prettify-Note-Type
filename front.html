@@ -1,4 +1,7 @@
-<div class="prettify-flashcard theme-glassmorphism" data-anking-side="front">
+<div class="prettify-flashcard theme-glassmorphism"
+  data-anking-side="front"
+  {{#Light Background}}data-anki-background-light="{{Light Background}}"{{/Light Background}}
+  {{#Dark Background}}data-anki-background-dark="{{Dark Background}}"{{/Dark Background}}>
   <div class="prettify-deck">{{Deck}}</div>
   <div class="prettify-field prettify-field--front">{{edit::cloze:Text}}</div>
 </div>
