@@ -40,95 +40,122 @@ I.   COLOR PALETTE
 ================================================================================
 */
 :root {
---anki-background-image: url('starsky.jpeg');
+  --anki-background-image: url('starsky.jpeg');
   --anki-background-color: #0a1326;
   --anki-background-color-light: #f0f5ff;
   --anki-background-color-dark: #03060f;
   --anki-background-image-light: url('starsky.jpeg');
   --anki-background-image-dark: url('starsky.jpeg');
-  --anki-background-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
-  --anki-background-overlay-dark: rgba(4, 10, 24, 0.45);
-\n  /* --- PALETTE: OCEAN (Teal/Deep Blue) --- */
-  --p-hue-bg: 180; --p-hue-accent: 200;
-  --p-bg-s: 40%; --p-bg-l: 92%; --p-bg-l-dark: 11%;
-  --p-accent-s: 55%; --p-accent-l: 50%; --p-accent-l-dark: 65%;
-  --p-text-s: 25%; --p-text-l: 22%; --p-text-l-dark: 88%;
-  --p-bold-fg: #FF7F50; --p-italic-fg: #6A5ACD; --p-underline-fg: #20B2AA; --p-bold-italic-fg: #CD5C5C;
-  --p-bold-fg-dark: #FFA07A; --p-italic-fg-dark: #DA70D6; /* MODIFIED: Brighter purple for readability */ --p-underline-fg-dark: #48D1CC; --p-bold-italic-fg-dark: #F08080;
-}
-/*
-================================================================================
-II.  MASTER VARIABLE ASSIGNMENT & CORE STYLES
-================================================================================
-*/
-:root {
+  --anki-background-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  --anki-background-overlay-dark: linear-gradient(180deg, rgba(4, 10, 24, 0.6), rgba(4, 10, 24, 0.35));
+  --anki-card-overlay: transparent;
+  --anki-card-overlay-light: var(--anki-background-overlay-light);
+  --anki-card-overlay-dark: var(--anki-background-overlay-dark);
 
-  --anki-background-image: url('starsky.jpeg');
-  --anki-background-color: #0a1326;
-  --anki-background-color-light: #f0f5ff;
-  --anki-background-color-dark: #03060f;
+  /* Palette fallback (runtime values provided by anking-shared.js) */
+  --p-hue-bg: 200;
+  --p-hue-accent: 210;
+  --p-bg-s: 42%;
+  --p-bg-l: 90%;
+  --p-bg-l-dark: 12%;
+  --p-accent-s: 58%;
+  --p-accent-l: 48%;
+  --p-accent-l-dark: 62%;
+  --p-text-s: 26%;
+  --p-text-l: 24%;
+  --p-text-l-dark: 88%;
+  --p-bold-fg: #ff7f50;
+  --p-italic-fg: #6a5acd;
+  --p-underline-fg: #20b2aa;
+  --p-bold-italic-fg: #cd5c5c;
+  --p-bold-fg-dark: #ffa07a;
+  --p-italic-fg-dark: #da70d6;
+  --p-underline-fg-dark: #48d1cc;
+  --p-bold-italic-fg-dark: #f08080;
 
-  /* Base Layout & Font */
-  --card-max-width: 100em; --font-family: "Rubik", "Inter", -apple-system, system-ui, "SF Pro", sans-serif;
-  --font-family-serif: "Merriweather", "Georgia", serif; --font-family-mono: "Fira Code", "Courier New", monospace;
+  /* Base layout & type ramp */
+  --card-max-width: 100em;
+  --font-family: "Rubik", "Inter", -apple-system, system-ui, "SF Pro", sans-serif;
+  --font-family-serif: "Merriweather", "Georgia", serif;
+  --font-family-mono: "Fira Code", "Courier New", monospace;
   --base-border-radius: 1.25em;
 
-  /* Light Mode Variables */
-  --c-text-primary-light: hsl(var(--p-hue-bg), var(--p-text-s), var(--p-text-l)); --c-text-secondary-light: hsl(var(--p-hue-bg), calc(var(--p-text-s) - 5%), calc(var(--p-text-l) + 20%));
-  --c-accent-1-light: hsl(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l)); --c-accent-2-light: hsl(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l) - 10%));
+  /* Palette-derived tokens */
+  --c-text-primary-light: hsl(var(--p-hue-bg), var(--p-text-s), var(--p-text-l));
+  --c-text-secondary-light: hsl(var(--p-hue-bg), calc(var(--p-text-s) - 5%), calc(var(--p-text-l) + 20%));
+  --c-accent-1-light: hsl(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l));
+  --c-accent-2-light: hsl(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l) - 10%));
   --c-divider-light: hsl(var(--p-hue-bg), calc(var(--p-bg-s) - 10%), calc(var(--p-bg-l) - 10%));
 
-  /* Dark Mode Variables -- MODIFIED FOR READABILITY */
-  --c-text-primary-dark: hsl(var(--p-hue-bg), 15%, 95%); /* Brighter primary text */
-  --c-text-secondary-dark: hsl(var(--p-hue-bg), 10%, 80%); /* Brighter secondary text */
-  --c-accent-1-dark: hsl(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l-dark)); --c-accent-2-dark: hsl(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l-dark) - 10%));
-  --c-divider-dark: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 15%));
+  --c-text-primary-dark: hsl(var(--p-hue-bg), 15%, 95%);
+  --c-text-secondary-dark: hsl(var(--p-hue-bg), 10%, 80%);
+  --c-accent-1-dark: hsl(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l-dark));
+  --c-accent-2-dark: hsl(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l-dark) - 10%));
+  --c-divider-dark: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 18%));
 
-  /* Abstracted Variables for CSS rules to use */
-  --text-primary: var(--c-text-primary-light); --text-secondary: var(--c-text-secondary-light);
-  --accent-1: var(--c-accent-1-light); --accent-2: var(--c-accent-2-light); --divider: var(--c-divider-light);
-  --bold-fg: var(--p-bold-fg); --italic-fg: var(--p-italic-fg); --underline-fg: var(--p-underline-fg); --bold-italic-fg: var(--p-bold-italic-fg);
+  /* Mode-agnostic defaults (overwritten per body mode) */
+  --text-primary: var(--c-text-primary-light);
+  --text-secondary: var(--c-text-secondary-light);
+  --accent-1: var(--c-accent-1-light);
+  --accent-2: var(--c-accent-2-light);
+  --divider: var(--c-divider-light);
+  --bold-fg: var(--p-bold-fg);
+  --italic-fg: var(--p-italic-fg);
+  --underline-fg: var(--p-underline-fg);
+  --bold-italic-fg: var(--p-bold-italic-fg);
 
-  /* Theme surface defaults (override per theme class) */
+  /* Shared theme defaults */
   --theme-card-radius: var(--base-border-radius);
-  --theme-card-background: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 3%), 0.8);
+  --theme-card-background: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 4%), 0.9);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
   --theme-card-border-color: var(--divider);
-  --theme-card-shadow: 0 8px 24px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 5%), calc(var(--p-text-l) - 15%), 0.14);
-  --theme-card-backdrop: blur(12px) saturate(120%);
+  --theme-card-shadow: 0 10px 28px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 6%), calc(var(--p-text-l) - 18%), 0.15);
+  --theme-card-backdrop: blur(12px) saturate(125%);
   --theme-card-outline: transparent;
 
   --theme-table-radius: 0.6em;
-  --theme-table-bg: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 1%), 0.35);
+  --theme-table-bg: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 2%), 0.42);
   --theme-table-border-width: 1px;
   --theme-table-border-style: solid;
   --theme-table-border-color: var(--divider);
-  --theme-table-shadow: 0 2px 5px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 10%), calc(var(--p-text-l) - 10%), 0.07);
-  --theme-table-header-bg: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l), 0.15);
+  --theme-table-shadow: 0 3px 8px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 10%), calc(var(--p-text-l) - 12%), 0.09);
+  --theme-table-header-bg: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l), 0.18);
   --theme-table-header-border-bottom-width: 2px;
   --theme-table-header-border-bottom: var(--accent-1);
   --theme-table-header-border-right-width: 1px;
   --theme-table-header-border-right: var(--divider);
   --theme-table-cell-border-width: 1px;
   --theme-table-cell-border: var(--divider);
-  --theme-table-stripe-bg: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) - 3%), 0.3);
+  --theme-table-stripe-bg: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) - 4%), 0.32);
   --theme-table-stripe-bg-night: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 3%), 0.3);
 
-  --theme-button-bg: hsla(var(--p-hue-accent), 20%, 50%, 0.1);
-  --theme-button-bg-hover: hsla(var(--p-hue-accent), 20%, 50%, 0.2);
+  --theme-button-bg: hsla(var(--p-hue-accent), 20%, 52%, 0.14);
+  --theme-button-bg-hover: hsla(var(--p-hue-accent), 20%, 52%, 0.22);
   --theme-button-border-width: 1px;
   --theme-button-border-style: solid;
-  --theme-button-border-color: hsla(var(--p-hue-accent), 20%, 50%, 0.2);
+  --theme-button-border-color: hsla(var(--p-hue-accent), 20%, 52%, 0.24);
   --theme-button-color: var(--accent-1);
   --theme-button-radius: 0.75em;
   --theme-button-shadow: none;
   --theme-button-backdrop: none;
 
-  --theme-img-shadow: 0 4px 10px hsla(var(--p-hue-bg), var(--p-text-s), calc(var(--p-text-l) - 15%), 0.12);
-  --theme-img-shadow-hover: 0 8px 20px hsla(var(--p-hue-bg), var(--p-text-s), calc(var(--p-text-l) - 25%), 0.2);
-  --theme-img-shadow-night: 0 4px 12px hsla(0, 0%, 0%, 0.25);
-  --theme-img-shadow-hover-night: 0 8px 25px hsla(0, 0%, 0%, 0.35);
+  --theme-img-shadow: 0 4px 12px hsla(var(--p-hue-bg), var(--p-text-s), calc(var(--p-text-l) - 16%), 0.14);
+  --theme-img-shadow-hover: 0 8px 22px hsla(var(--p-hue-bg), var(--p-text-s), calc(var(--p-text-l) - 24%), 0.22);
+  --theme-img-shadow-night: 0 4px 12px hsla(0, 0%, 0%, 0.28);
+  --theme-img-shadow-hover-night: 0 8px 25px hsla(0, 0%, 0%, 0.36);
+
+  /* Surface tokens (light/dark variants supplied by body selectors) */
+  --anki-surface-glass: rgba(255, 255, 255, 0.28);
+  --anki-surface-glass-border: rgba(255, 255, 255, 0.5);
+  --anki-surface-solid: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 6%), 0.9);
+  --anki-surface-solid-strong: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 10%), 0.95);
+  --anki-surface-border-subtle: hsla(var(--p-hue-bg), calc(var(--p-bg-s) - 12%), calc(var(--p-bg-l) - 10%), 0.28);
+  --anki-surface-border-strong: hsla(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l) - 6%), 0.42);
+  --anki-surface-button: hsla(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l) + 6%), 0.35);
+  --anki-surface-button-strong: hsla(var(--p-hue-accent), var(--p-accent-s), calc(var(--p-accent-l) + 12%), 0.5);
+  --anki-surface-shadow-glass: 0 14px 32px rgba(15, 23, 42, 0.18);
+  --anki-surface-shadow-solid: 0 18px 38px rgba(15, 23, 42, 0.2);
 }
 
 /* === MODIFICATION: Background Image & Full Screen Fix === */
@@ -138,27 +165,55 @@ html, body {
   margin: 0;
   padding: 0;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--anki-background-overlay, transparent);
-  z-index: -1;
-}
 body:not(.night_mode) {
   --anki-background-image: var(--anki-background-image-light, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)));
+  --anki-background-overlay: transparent;
+  --anki-card-overlay: var(--anki-card-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)));
   --anki-background-color: var(--anki-background-color-light, #f0f5ff);
+
+  --text-primary: var(--c-text-primary-light);
+  --text-secondary: var(--c-text-secondary-light);
+  --accent-1: var(--c-accent-1-light);
+  --accent-2: var(--c-accent-2-light);
+  --divider: var(--c-divider-light);
+  --bold-fg: var(--p-bold-fg);
+  --italic-fg: var(--p-italic-fg);
+  --underline-fg: var(--p-underline-fg);
+  --bold-italic-fg: var(--p-bold-italic-fg);
+
+  --anki-surface-glass: rgba(255, 255, 255, 0.34);
+  --anki-surface-glass-border: rgba(255, 255, 255, 0.58);
+  --anki-surface-solid: color-mix(in srgb, rgba(255, 255, 255, 0.94) 80%, var(--anki-palette-base, #10294a) 20%);
+  --anki-surface-solid-strong: color-mix(in srgb, rgba(255, 255, 255, 0.98) 74%, var(--anki-palette-base, #10294a) 26%);
+  --anki-surface-border-subtle: color-mix(in srgb, rgba(17, 33, 58, 0.18) 40%, rgba(255, 255, 255, 0.4) 60%);
+  --anki-surface-border-strong: color-mix(in srgb, rgba(255, 255, 255, 0.45) 50%, var(--anki-palette-accent, #7faeff) 50%);
+  --anki-surface-button: color-mix(in srgb, rgba(255, 255, 255, 0.9) 60%, var(--anki-palette-accent, #7faeff) 40%);
+  --anki-surface-button-strong: color-mix(in srgb, rgba(255, 255, 255, 0.85) 45%, var(--anki-palette-accent, #7faeff) 55%);
+  --anki-surface-shadow-glass: 0 16px 34px rgba(17, 33, 58, 0.18);
+  --anki-surface-shadow-solid: 0 20px 40px rgba(17, 33, 58, 0.22);
+
+  --theme-card-background: var(--anki-surface-solid);
+  --theme-card-border-color: var(--anki-surface-border-subtle);
+  --theme-card-shadow: var(--anki-surface-shadow-solid);
+  --theme-card-backdrop: blur(14px) saturate(135%);
+  --theme-table-bg: color-mix(in srgb, var(--anki-surface-solid) 70%, transparent 30%);
+  --theme-table-border-color: var(--anki-surface-border-subtle);
+  --theme-table-shadow: var(--anki-surface-shadow-glass);
+  --theme-table-header-bg: color-mix(in srgb, var(--anki-surface-button) 60%, transparent 40%);
+  --theme-table-header-border-right: color-mix(in srgb, var(--anki-surface-border-subtle) 65%, transparent 35%);
+  --theme-table-header-border-bottom: var(--anki-surface-border-strong);
+  --theme-table-cell-border: color-mix(in srgb, var(--anki-surface-border-subtle) 85%, transparent 15%);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 55%, transparent 45%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 65%, transparent 35%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 60%, transparent 40%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 88%, #ffffff 12%);
 }
 body.night_mode {
   --anki-background-image: var(--anki-background-image-dark, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-dark, rgba(4, 10, 24, 0.45));
+  --anki-background-overlay: transparent;
+  --anki-card-overlay: var(--anki-card-overlay-dark, linear-gradient(180deg, rgba(4, 10, 24, 0.6), rgba(4, 10, 24, 0.35)));
   --anki-background-color: var(--anki-background-color-dark, #03060f);
-}
 
-body.night_mode {
-  /* This section applies the dark mode text colors */
   --text-primary: var(--c-text-primary-dark);
   --text-secondary: var(--c-text-secondary-dark);
   --accent-1: var(--c-accent-1-dark);
@@ -169,18 +224,32 @@ body.night_mode {
   --underline-fg: var(--p-underline-fg-dark);
   --bold-italic-fg: var(--p-bold-italic-fg-dark);
 
-  --theme-card-background: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 5%), 0.75);
-  --theme-card-border-color: rgba(255, 255, 255, 0.08);
-  --theme-card-shadow: 0 14px 32px hsla(0, 0%, 0%, 0.45);
-  --theme-card-backdrop: blur(14px) saturate(120%);
-  --theme-table-bg: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 4%), 0.4);
-  --theme-table-border-color: rgba(255, 255, 255, 0.1);
-  --theme-table-header-bg: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l-dark), 0.18);
-  --theme-table-header-border-right: rgba(255, 255, 255, 0.1);
-  --theme-table-cell-border: rgba(255, 255, 255, 0.08);
-  --theme-button-bg: hsla(var(--p-hue-accent), 22%, 60%, 0.18);
-  --theme-button-bg-hover: hsla(var(--p-hue-accent), 22%, 60%, 0.28);
-  --theme-button-border-color: hsla(var(--p-hue-accent), 22%, 60%, 0.28);
+  --anki-surface-glass: color-mix(in srgb, rgba(5, 12, 24, 0.78) 70%, rgba(255, 255, 255, 0.12) 30%);
+  --anki-surface-glass-border: color-mix(in srgb, rgba(100, 150, 255, 0.55) 60%, rgba(5, 12, 24, 0.3) 40%);
+  --anki-surface-solid: color-mix(in srgb, rgba(5, 12, 24, 0.92) 76%, rgba(255, 255, 255, 0.12) 24%);
+  --anki-surface-solid-strong: color-mix(in srgb, rgba(5, 12, 24, 0.95) 72%, rgba(255, 255, 255, 0.14) 28%);
+  --anki-surface-border-subtle: color-mix(in srgb, rgba(5, 12, 24, 0.78) 52%, rgba(125, 175, 255, 0.25) 48%);
+  --anki-surface-border-strong: color-mix(in srgb, rgba(8, 16, 32, 0.75) 45%, rgba(125, 175, 255, 0.45) 55%);
+  --anki-surface-button: color-mix(in srgb, rgba(6, 14, 28, 0.85) 52%, rgba(125, 175, 255, 0.48) 48%);
+  --anki-surface-button-strong: color-mix(in srgb, rgba(8, 16, 32, 0.78) 48%, rgba(125, 175, 255, 0.58) 52%);
+  --anki-surface-shadow-glass: 0 18px 40px rgba(3, 8, 18, 0.55);
+  --anki-surface-shadow-solid: 0 22px 46px rgba(0, 0, 0, 0.62);
+
+  --theme-card-background: var(--anki-surface-solid);
+  --theme-card-border-color: var(--anki-surface-border-subtle);
+  --theme-card-shadow: var(--anki-surface-shadow-solid);
+  --theme-card-backdrop: blur(16px) saturate(130%);
+  --theme-table-bg: color-mix(in srgb, var(--anki-surface-solid) 68%, transparent 32%);
+  --theme-table-border-color: var(--anki-surface-border-subtle);
+  --theme-table-shadow: var(--anki-surface-shadow-glass);
+  --theme-table-header-bg: color-mix(in srgb, var(--anki-surface-button) 70%, transparent 30%);
+  --theme-table-header-border-right: color-mix(in srgb, var(--anki-surface-border-subtle) 68%, transparent 32%);
+  --theme-table-header-border-bottom: var(--anki-surface-border-strong);
+  --theme-table-cell-border: color-mix(in srgb, var(--anki-surface-border-subtle) 82%, transparent 18%);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 60%, transparent 40%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 72%, transparent 28%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 62%, transparent 38%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 92%, #ffffff 8%);
 }
 /* === END MODIFICATION === */
 
@@ -224,6 +293,19 @@ body.night_mode {
   -webkit-backdrop-filter: var(--theme-card-backdrop, none);
   outline: var(--theme-card-outline, transparent);
 }
+.prettify-flashcard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--anki-card-overlay, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.prettify-flashcard > * {
+  position: relative;
+  z-index: 1;
+}
 
 .prettify-flashcard ::selection { background-color: var(--accent-2); color: white; }
 .prettify-flashcard b, .prettify-flashcard strong { color: var(--bold-fg); }
@@ -254,25 +336,24 @@ III.  THEME DEFINITIONS & TOKEN MAPS
 .theme-default,
 .prettify-flashcard:not([class*="theme-"]),
 .theme-fluent {
-  --theme-card-background: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 3%), 0.8);
-  --theme-card-backdrop: blur(10px) saturate(120%);
+  --theme-card-background: var(--anki-surface-solid);
+  --theme-card-backdrop: blur(16px) saturate(140%);
   --theme-card-radius: var(--base-border-radius);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: var(--divider);
-  --theme-card-shadow: 0 10px 28px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 8%), calc(var(--p-text-l) - 18%), 0.12);
-  --theme-table-shadow: 0 3px 8px hsla(var(--p-hue-bg), calc(var(--p-text-s) + 10%), calc(var(--p-text-l) - 10%), 0.1);
-  --theme-table-header-bg: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l), 0.15);
-}
-body.night_mode .theme-default,
-body.night_mode .prettify-flashcard:not([class*="theme-"]),
-body.night_mode .theme-fluent {
-  --theme-card-background: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 5%), 0.75);
-  --theme-card-border-color: rgba(255, 255, 255, 0.08);
-  --theme-card-shadow: 0 16px 36px hsla(0, 0%, 0%, 0.5);
-  --theme-table-bg: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 4%), 0.4);
-  --theme-table-cell-border: rgba(255, 255, 255, 0.08);
-  --theme-table-header-bg: hsla(var(--p-hue-accent), var(--p-accent-s), var(--p-accent-l-dark), 0.25);
+  --theme-card-border-color: var(--anki-surface-border-subtle);
+  --theme-card-shadow: var(--anki-surface-shadow-solid);
+  --theme-table-bg: color-mix(in srgb, var(--anki-surface-solid) 72%, transparent 28%);
+  --theme-table-border-color: var(--anki-surface-border-subtle);
+  --theme-table-shadow: var(--anki-surface-shadow-glass);
+  --theme-table-header-bg: color-mix(in srgb, var(--anki-surface-button) 64%, transparent 36%);
+  --theme-table-header-border-bottom: var(--anki-surface-border-strong);
+  --theme-table-header-border-right: color-mix(in srgb, var(--anki-surface-border-subtle) 70%, transparent 30%);
+  --theme-table-cell-border: color-mix(in srgb, var(--anki-surface-border-subtle) 84%, transparent 16%);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 58%, transparent 42%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 68%, transparent 32%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 60%, transparent 40%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 90%, #ffffff 10%);
 }
 .theme-default .cloze,
 .prettify-flashcard:not([class*="theme-"]) .cloze,
@@ -285,39 +366,24 @@ body.night_mode .theme-fluent {
 /* --- THEME: GLASSMORPHISM & GLASS-DEEP --- */
 .theme-glassmorphism,
 .theme-glass-deep {
-  --theme-card-background: rgba(255, 255, 255, 0.1);
-  --theme-card-backdrop: blur(35px) saturate(160%);
+  --theme-card-background: var(--anki-surface-glass);
+  --theme-card-backdrop: blur(35px) saturate(170%) contrast(108%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: rgba(255, 255, 255, 0.2);
-  --theme-card-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.3), 0 10px 30px rgba(0, 0, 0, 0.15);
-  --theme-table-bg: rgba(255, 255, 255, 0.03);
-  --theme-table-border-color: rgba(255, 255, 255, 0.1);
+  --theme-card-border-color: var(--anki-surface-glass-border);
+  --theme-card-shadow: inset 0 1.5px 1px color-mix(in srgb, var(--anki-palette-glow, #ffffff) 60%, transparent 40%), var(--anki-surface-shadow-glass);
+  --theme-table-bg: color-mix(in srgb, var(--anki-surface-glass) 55%, transparent 45%);
+  --theme-table-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 72%, transparent 28%);
   --theme-table-shadow: none;
   --theme-table-radius: 0.5em;
-  --theme-table-header-bg: rgba(255, 255, 255, 0.05);
-  --theme-table-header-border-bottom: rgba(255, 255, 255, 0.15);
-  --theme-table-header-border-right: rgba(255, 255, 255, 0.1);
-  --theme-table-cell-border: rgba(255, 255, 255, 0.08);
-  --theme-button-bg: rgba(255, 255, 255, 0.1);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.18);
-  --theme-button-border-color: rgba(255, 255, 255, 0.2);
-  --theme-button-color: var(--text-primary);
-}
-body.night_mode .theme-glassmorphism,
-body.night_mode .theme-glass-deep {
-  --theme-card-background: rgba(20, 20, 20, 0.2);
-  --theme-card-border-color: rgba(255, 255, 255, 0.1);
-  --theme-card-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.3);
-  --theme-table-bg: rgba(50, 50, 50, 0.05);
-  --theme-table-border-color: rgba(255, 255, 255, 0.07);
-  --theme-table-header-bg: rgba(from var(--accent-1) r g b / 0.08);
-  --theme-table-header-border-bottom: rgba(from var(--accent-1) r g b / 0.12);
-  --theme-table-header-border-right: rgba(from var(--accent-1) r g b / 0.08);
-  --theme-table-cell-border: rgba(from var(--accent-1) r g b / 0.07);
-  --theme-button-bg: rgba(255, 255, 255, 0.08);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.14);
-  --theme-button-border-color: rgba(255, 255, 255, 0.12);
+  --theme-table-header-bg: color-mix(in srgb, var(--anki-surface-button) 50%, transparent 50%);
+  --theme-table-header-border-bottom: color-mix(in srgb, var(--anki-surface-border-strong) 60%, transparent 40%);
+  --theme-table-header-border-right: color-mix(in srgb, var(--anki-surface-border-subtle) 68%, transparent 32%);
+  --theme-table-cell-border: color-mix(in srgb, var(--anki-surface-border-subtle) 75%, transparent 25%);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 52%, transparent 48%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 62%, transparent 38%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 70%, transparent 30%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 92%, #ffffff 8%);
 }
 
 /* --- THEME: NEOBRUTALISM --- */
@@ -347,20 +413,20 @@ body.night_mode .theme-neobrutalism {
   --theme-card-radius: 50px 20px 40px 15px / 30px 45px 25px 55px;
   --theme-card-border-width: 0;
   --theme-card-border-style: none;
-  --theme-card-shadow: inset -6px -6px 12px rgba(255, 255, 255, 0.5), inset 6px 6px 16px rgba(0, 0, 0, 0.1), 10px 10px 20px rgba(0, 0, 0, 0.1);
+  --theme-card-shadow: inset -6px -6px 12px color-mix(in srgb, var(--anki-palette-glow, #ffffff) 58%, transparent 42%), inset 6px 6px 16px rgba(0, 0, 0, 0.1), 10px 10px 20px rgba(0, 0, 0, 0.1);
   --theme-card-backdrop: none;
   --theme-button-bg: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l));
   --theme-button-bg-hover: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 2%));
   --theme-button-border-style: none;
   --theme-button-border-width: 0;
-  --theme-button-shadow: -4px -4px 8px rgba(255, 255, 255, 0.5), 4px 4px 8px rgba(0, 0, 0, 0.1);
+  --theme-button-shadow: -4px -4px 8px color-mix(in srgb, var(--anki-palette-glow, #ffffff) 58%, transparent 42%), 4px 4px 8px rgba(0, 0, 0, 0.1);
 }
 body.night_mode .theme-claymorphism {
   --theme-card-background: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark));
-  --theme-card-shadow: inset -6px -6px 12px rgba(255, 255, 255, 0.05), inset 6px 6px 16px rgba(0, 0, 0, 0.3), 10px 10px 20px rgba(0, 0, 0, 0.3);
+  --theme-card-shadow: inset -6px -6px 12px color-mix(in srgb, var(--anki-palette-glow, #ffffff) 18%, transparent 82%), inset 6px 6px 16px rgba(0, 0, 0, 0.3), 10px 10px 20px rgba(0, 0, 0, 0.3);
   --theme-button-bg: hsl(var(--p-hue-bg), var(--p-bg-s), var(--p-bg-l-dark));
   --theme-button-bg-hover: hsl(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l-dark) + 4%));
-  --theme-button-shadow: -4px -4px 8px rgba(255, 255, 255, 0.05), 4px 4px 8px rgba(0, 0, 0, 0.3);
+  --theme-button-shadow: -4px -4px 8px color-mix(in srgb, var(--anki-palette-glow, #ffffff) 22%, transparent 78%), 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* --- THEME: MINIMALIST --- */
@@ -407,18 +473,18 @@ body.night_mode .theme-acrylic {
   --theme-card-shadow: none;
 }
 .theme-quartz {
-  --theme-card-background: hsla(var(--p-hue-bg), 20%, 98%, 0.5);
-  --theme-card-backdrop: blur(10px);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-solid-strong) 80%, transparent 20%);
+  --theme-card-backdrop: blur(14px) saturate(150%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: hsla(var(--p-hue-bg), 20%, 98%, 0.7);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 70%, transparent 30%);
   --theme-card-radius: 0.5em;
-  --theme-card-shadow: inset 0 0 20px hsla(var(--p-hue-bg), 20%, 98%, 0.3);
+  --theme-card-shadow: inset 0 0 20px color-mix(in srgb, var(--anki-surface-solid) 42%, transparent 58%);
 }
 body.night_mode .theme-quartz {
-  --theme-card-background: hsla(var(--p-hue-bg), 10%, 10%, 0.4);
-  --theme-card-border-color: hsla(var(--p-hue-bg), 10%, 10%, 0.5);
-  --theme-card-shadow: inset 0 0 20px hsla(var(--p-hue-bg), 10%, 10%, 0.2);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-solid) 82%, transparent 18%);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 78%, transparent 22%);
+  --theme-card-shadow: inset 0 0 20px color-mix(in srgb, var(--anki-surface-solid) 55%, transparent 45%);
 }
 .theme-obsidian {
   --theme-card-background: linear-gradient(145deg, hsl(var(--p-hue-bg), 10%, 25%), hsl(var(--p-hue-bg), 10%, 15%));
@@ -454,17 +520,17 @@ body.night_mode .theme-obsidian {
   --theme-button-border-color: hsl(var(--p-hue-bg), 10%, 25%);
 }
 .theme-holographic {
-  --theme-card-background: rgba(255, 255, 255, 0.1);
-  --theme-card-backdrop: blur(20px);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 68%, transparent 32%);
+  --theme-card-backdrop: blur(24px) saturate(175%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: rgba(255, 255, 255, 0.2);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 68%, transparent 32%);
   --theme-card-radius: var(--base-border-radius);
-  --theme-card-shadow: none;
-  --theme-button-bg: rgba(255, 255, 255, 0.1);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.18);
-  --theme-button-border-color: rgba(255, 255, 255, 0.2);
-  --theme-button-color: var(--text-primary);
+  --theme-card-shadow: inset 0 1px 0 color-mix(in srgb, var(--anki-palette-glow, #ffffff) 45%, transparent 55%), var(--anki-surface-shadow-glass);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 50%, transparent 50%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 60%, transparent 40%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 65%, transparent 35%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 90%, #ffffff 10%);
   position: relative;
   overflow: hidden;
 }
@@ -483,26 +549,26 @@ body.night_mode .theme-obsidian {
 
 /* --- THEME: LIQUID GLASS --- */
 .theme-liquid-glass {
-  --theme-card-background: rgba(255, 255, 255, 0.15);
-  --theme-card-backdrop: blur(50px) saturate(180%);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 70%, transparent 30%);
+  --theme-card-backdrop: blur(50px) saturate(160%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: rgba(255, 255, 255, 0.4);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 75%, transparent 25%);
   --theme-card-radius: calc(var(--base-border-radius) + 10px);
-  --theme-card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-  --theme-button-bg: rgba(255, 255, 255, 0.12);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.2);
-  --theme-button-border-color: rgba(255, 255, 255, 0.25);
-  --theme-button-color: var(--text-primary);
+  --theme-card-shadow: 0 8px 32px 0 color-mix(in srgb, var(--anki-palette-base, #10294a) 22%, transparent);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 48%, transparent 52%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 60%, transparent 40%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 58%, transparent 42%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 92%, #ffffff 8%);
   overflow: hidden;
 }
 body.night_mode .theme-liquid-glass {
-  --theme-card-background: rgba(30, 30, 30, 0.2);
-  --theme-card-border-color: rgba(255, 255, 255, 0.15);
-  --theme-card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  --theme-button-bg: rgba(255, 255, 255, 0.08);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.14);
-  --theme-button-border-color: rgba(255, 255, 255, 0.18);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 78%, transparent 22%);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 74%, transparent 26%);
+  --theme-card-shadow: 0 8px 32px 0 color-mix(in srgb, var(--anki-palette-base, #050b16) 38%, transparent);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 54%, transparent 46%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 66%, transparent 34%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 64%, transparent 36%);
 }
 .theme-liquid-glass::after {
   content: '';
@@ -511,23 +577,23 @@ body.night_mode .theme-liquid-glass {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.5), transparent 30%);
+  background: radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 50%, transparent 50%), transparent 30%);
   z-index: -1;
   opacity: 0.5;
 }
 body.night_mode .theme-liquid-glass::after {
-  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2), transparent 35%);
+  background: radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 28%, transparent 72%), transparent 35%);
 }
 
 /* --- THEME: LIQUID APPLE --- */
 .theme-liquid-apple {
-  --theme-card-background: color-mix(in oklab, #fff 75%, transparent);
-  --theme-card-backdrop: blur(30px) saturate(160%) contrast(105%);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 78%, transparent 22%);
+  --theme-card-backdrop: blur(30px) saturate(165%) contrast(108%);
   --theme-card-radius: calc(var(--base-border-radius) + 8px);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: color-mix(in oklab, #fff 45%, transparent);
-  --theme-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 10px 25px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 74%, transparent 26%);
+  --theme-card-shadow: inset 0 1px 0 color-mix(in srgb, var(--anki-palette-glow, #ffffff) 55%, transparent 45%), var(--anki-surface-shadow-glass);
   position: relative;
   background: var(--theme-card-background);
   background-clip: padding-box;
@@ -539,7 +605,7 @@ body.night_mode .theme-liquid-glass::after {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-1) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--anki-surface-border-strong) 65%, transparent 35%);
   opacity: 0.75;
 }
 .theme-liquid-apple::after {
@@ -548,36 +614,36 @@ body.night_mode .theme-liquid-glass::after {
   inset: -20% -20% auto -20%;
   height: 60%;
   border-radius: 50%;
-  background: radial-gradient(120% 120% at 50% -10%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.06) 45%, transparent 65%);
+  background: radial-gradient(120% 120% at 50% -10%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 45%, transparent) 0%, color-mix(in srgb, var(--anki-surface-glass) 40%, transparent) 45%, transparent 65%);
   filter: blur(10px);
   pointer-events: none;
 }
 .theme-liquid-apple {
-  background-image: radial-gradient(50% 120% at 60% 0%, color-mix(in oklab, var(--accent-1) 10%, transparent) 0%, transparent 60%);
+  background-image: radial-gradient(50% 120% at 60% 0%, color-mix(in srgb, var(--anki-surface-button) 35%, transparent 65%) 0%, transparent 60%);
 }
 body.night_mode .theme-liquid-apple {
-  --theme-card-background: color-mix(in oklab, #111 70%, transparent);
-  --theme-card-border-color: color-mix(in oklab, #fff 12%, transparent);
-  --theme-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 14px 30px rgba(0, 0, 0, 0.45), 0 4px 10px rgba(0, 0, 0, 0.25);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 82%, transparent 18%);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 72%, transparent 28%);
+  --theme-card-shadow: inset 0 1px 0 color-mix(in srgb, var(--anki-palette-glow, #ffffff) 24%, transparent 76%), var(--anki-surface-shadow-glass);
   background: var(--theme-card-background);
 }
 body.night_mode .theme-liquid-apple::before {
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-1) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--anki-surface-border-strong) 72%, transparent 28%);
   opacity: 0.55;
 }
 body.night_mode .theme-liquid-apple::after {
-  background: radial-gradient(120% 120% at 50% -10%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 65%);
+  background: radial-gradient(120% 120% at 50% -10%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 28%, transparent) 0%, color-mix(in srgb, var(--anki-surface-glass) 28%, transparent) 45%, transparent 65%);
 }
 
 /* --- THEME: VITREOUS --- */
 .theme-vitreous {
-  --theme-card-background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.22));
-  --theme-card-backdrop: blur(28px) saturate(170%);
+  --theme-card-background: linear-gradient(180deg, color-mix(in srgb, var(--anki-surface-glass) 82%, transparent 18%), color-mix(in srgb, var(--anki-surface-glass) 60%, transparent 40%));
+  --theme-card-backdrop: blur(28px) saturate(175%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: rgba(255, 255, 255, 0.35);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 70%, transparent 30%);
   --theme-card-radius: calc(var(--base-border-radius) + 12px);
-  --theme-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 8px 30px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.1);
+  --theme-card-shadow: inset 0 1px 0 color-mix(in srgb, var(--anki-palette-glow, #ffffff) 42%, transparent 58%), var(--anki-surface-shadow-glass);
   position: relative;
   overflow: hidden;
   background: var(--theme-card-background);
@@ -589,8 +655,8 @@ body.night_mode .theme-liquid-apple::after {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: radial-gradient(120% 100% at 80% -10%, color-mix(in oklab, var(--accent-1) 12%, transparent) 0%, transparent 55%),
-              linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 0.08) 100%);
+  background: radial-gradient(120% 100% at 80% -10%, color-mix(in srgb, var(--anki-surface-button-strong) 40%, transparent 60%) 0%, transparent 55%),
+              linear-gradient(180deg, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 32%, transparent 68%), color-mix(in srgb, var(--anki-surface-glass) 32%, transparent 68%) 40%, color-mix(in srgb, rgba(0, 0, 0, 0.08) 70%, transparent 30%) 100%);
   mix-blend-mode: soft-light;
 }
 .theme-vitreous::after {
@@ -600,27 +666,27 @@ body.night_mode .theme-liquid-apple::after {
   left: -10%;
   right: -10%;
   height: 55%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.18) 40%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 48%, transparent) 0%, color-mix(in srgb, var(--anki-surface-glass) 32%, transparent) 40%, transparent 100%);
   transform: rotate(2deg);
   filter: blur(8px);
   pointer-events: none;
 }
 body.night_mode .theme-vitreous {
-  --theme-card-background: linear-gradient(180deg, rgba(20, 20, 24, 0.75), rgba(14, 14, 18, 0.55));
-  --theme-card-border-color: rgba(255, 255, 255, 0.12);
-  --theme-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 12px 34px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.28);
+  --theme-card-background: linear-gradient(180deg, color-mix(in srgb, var(--anki-surface-glass) 86%, transparent 14%), color-mix(in srgb, var(--anki-surface-solid) 60%, transparent 40%));
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 76%, transparent 24%);
+  --theme-card-shadow: inset 0 1px 0 color-mix(in srgb, var(--anki-palette-glow, #ffffff) 18%, transparent 82%), var(--anki-surface-shadow-glass);
 }
 body.night_mode .theme-vitreous::before {
-  background: radial-gradient(120% 100% at 80% -10%, color-mix(in oklab, var(--accent-1) 18%, transparent) 0%, transparent 55%),
-              linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 0.25) 100%);
+  background: radial-gradient(120% 100% at 80% -10%, color-mix(in srgb, var(--anki-surface-button-strong) 48%, transparent 52%) 0%, transparent 55%),
+              linear-gradient(180deg, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 18%, transparent 82%), color-mix(in srgb, var(--anki-surface-glass) 22%, transparent 78%) 40%, color-mix(in srgb, rgba(0, 0, 0, 0.25) 70%, transparent 30%) 100%);
 }
 body.night_mode .theme-vitreous::after {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 40%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 24%, transparent 76%) 0%, color-mix(in srgb, var(--anki-surface-glass) 18%, transparent 82%) 40%, transparent 100%);
 }
 
 /* --- THEME: STARFIELD MINIMAL --- */
 .theme-starfield-minimal {
-  --theme-card-background: color-mix(in srgb, var(--anki-palette-base, #0f1e35) 85%, rgba(255, 255, 255, 0.12));
+  --theme-card-background: color-mix(in srgb, var(--anki-palette-base, #0f1e35) 82%, var(--anki-surface-glass) 18%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
   --theme-card-border-color: color-mix(in srgb, var(--anki-palette-accent, #7faeff) 40%, transparent);
@@ -628,7 +694,7 @@ body.night_mode .theme-vitreous::after {
   --theme-card-shadow: 0 22px 40px color-mix(in srgb, var(--anki-palette-base, #0f1e35) 70%, transparent),
                       0 0 0 1px color-mix(in srgb, var(--anki-palette-accent, #7faeff) 25%, transparent);
   --theme-card-backdrop: blur(10px) saturate(125%);
-  --theme-table-bg: color-mix(in srgb, var(--anki-palette-base, #0f1e35) 55%, rgba(13, 36, 74, 0.55));
+  --theme-table-bg: color-mix(in srgb, var(--anki-palette-base, #0f1e35) 55%, color-mix(in srgb, var(--anki-surface-solid) 40%, transparent 60%));
   --theme-table-border-color: color-mix(in srgb, var(--anki-palette-accent, #7faeff) 30%, transparent);
   --theme-table-shadow: 0 16px 28px color-mix(in srgb, var(--anki-palette-base, #0f1e35) 60%, transparent);
   --theme-table-header-bg: color-mix(in srgb, var(--anki-palette-accent, #7faeff) 22%, transparent);
@@ -658,20 +724,20 @@ body.night_mode .theme-vitreous::after {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 32%, transparent 68%) 0%, transparent 70%);
   opacity: 0.35;
   mix-blend-mode: soft-light;
   animation: starfield-twinkle 14s ease-in-out infinite alternate;
   pointer-events: none;
 }
 body.night_mode .theme-starfield-minimal {
-  --theme-card-background: color-mix(in srgb, var(--anki-palette-base, #050b16) 88%, rgba(255, 255, 255, 0.06));
+  --theme-card-background: color-mix(in srgb, var(--anki-palette-base, #050b16) 86%, var(--anki-surface-glass) 14%);
   --theme-card-border-color: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 45%, transparent);
   --theme-button-bg: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 32%, transparent);
   --theme-button-bg-hover: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 50%, transparent);
   --theme-button-border-color: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 55%, transparent);
   --theme-button-color: color-mix(in srgb, var(--anki-palette-text, #e6efff) 92%, #ffffff 8%);
-  --theme-table-bg: color-mix(in srgb, var(--anki-palette-base, #050b16) 68%, rgba(13, 36, 74, 0.55));
+  --theme-table-bg: color-mix(in srgb, var(--anki-palette-base, #050b16) 68%, color-mix(in srgb, var(--anki-surface-solid) 38%, transparent 62%));
 }
 body.night_mode .theme-starfield-minimal::before {
   background:
@@ -681,29 +747,29 @@ body.night_mode .theme-starfield-minimal::before {
   filter: blur(2px);
 }/* --- THEME: APPLE GLASS REFRACTION --- */
 .theme-apple-glass {
-  --theme-card-background: rgba(255, 255, 255, 0.35);
-  --theme-card-backdrop: blur(34px) saturate(180%) contrast(110%);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 74%, transparent 26%);
+  --theme-card-backdrop: blur(34px) saturate(185%) contrast(112%);
   --theme-card-border-width: 1px;
   --theme-card-border-style: solid;
-  --theme-card-border-color: rgba(255, 255, 255, 0.45);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 72%, transparent 28%);
   --theme-card-radius: calc(var(--base-border-radius) + 14px);
-  --theme-card-shadow: 0 18px 40px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.2);
-  --theme-table-bg: rgba(255, 255, 255, 0.18);
-  --theme-table-border-color: rgba(255, 255, 255, 0.22);
-  --theme-table-shadow: 0 12px 24px rgba(12, 19, 35, 0.18);
-  --theme-table-header-bg: rgba(255, 255, 255, 0.28);
-  --theme-table-header-border-bottom: rgba(255, 255, 255, 0.45);
-  --theme-table-cell-border: rgba(255, 255, 255, 0.26);
-  --theme-button-bg: rgba(255, 255, 255, 0.26);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.36);
+  --theme-card-shadow: 0 18px 40px color-mix(in srgb, var(--anki-palette-base, #10294a) 28%, transparent), 0 0 0 1px color-mix(in srgb, var(--anki-surface-glass-border) 58%, transparent 42%);
+  --theme-table-bg: color-mix(in srgb, var(--anki-surface-glass) 55%, transparent 45%);
+  --theme-table-border-color: color-mix(in srgb, var(--anki-surface-glass-border) 64%, transparent 36%);
+  --theme-table-shadow: 0 12px 24px color-mix(in srgb, var(--anki-palette-base, #10294a) 24%, transparent);
+  --theme-table-header-bg: color-mix(in srgb, var(--anki-surface-button) 58%, transparent 42%);
+  --theme-table-header-border-bottom: color-mix(in srgb, var(--anki-surface-border-strong) 66%, transparent 34%);
+  --theme-table-cell-border: color-mix(in srgb, var(--anki-surface-border-subtle) 70%, transparent 30%);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 60%, transparent 40%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 72%, transparent 28%);
   --theme-button-border-width: 1px;
   --theme-button-border-style: solid;
-  --theme-button-border-color: rgba(255, 255, 255, 0.5);
-  --theme-button-color: rgba(15, 23, 42, 0.75);
-  --theme-button-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 68%, transparent 32%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 86%, #ffffff 14%);
+  --theme-button-shadow: 0 10px 24px color-mix(in srgb, var(--anki-palette-base, #10294a) 26%, transparent);
   --theme-button-backdrop: blur(24px);
-  --theme-img-shadow: 0 20px 38px rgba(15, 23, 42, 0.2);
-  --theme-img-shadow-hover: 0 28px 44px rgba(15, 23, 42, 0.25);
+  --theme-img-shadow: 0 20px 38px color-mix(in srgb, var(--anki-palette-base, #10294a) 26%, transparent);
+  --theme-img-shadow-hover: 0 28px 44px color-mix(in srgb, var(--anki-palette-base, #10294a) 32%, transparent);
 }
 .theme-apple-glass::before,
 .theme-apple-glass::after {
@@ -716,22 +782,22 @@ body.night_mode .theme-starfield-minimal::before {
 }
 .theme-apple-glass::before {
   background:
-    radial-gradient(40% 50% at 20% 15%, rgba(255, 255, 255, 0.55), transparent 75%),
-    radial-gradient(60% 55% at 80% 25%, rgba(170, 212, 255, 0.35), transparent 80%),
-    radial-gradient(60% 65% at 50% 80%, rgba(255, 214, 244, 0.25), transparent 78%);
+    radial-gradient(40% 50% at 20% 15%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 55%, transparent 45%), transparent 75%),
+    radial-gradient(60% 55% at 80% 25%, color-mix(in srgb, var(--anki-surface-button-strong) 45%, transparent 55%), transparent 80%),
+    radial-gradient(60% 65% at 50% 80%, color-mix(in srgb, var(--anki-surface-button) 38%, transparent 62%), transparent 78%);
   filter: blur(12px);
   opacity: 0.9;
 }
 .theme-apple-glass::after {
   background:
-    conic-gradient(from 180deg at 50% 10%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 60%),
-    radial-gradient(30% 80% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 70%);
+    conic-gradient(from 180deg at 50% 10%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 60%, transparent 40%), transparent 60%),
+    radial-gradient(30% 80% at 50% 0%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 48%, transparent 52%), transparent 70%);
   opacity: 0.75;
   transform: translateY(-8%) rotate(2deg);
 }
 .theme-apple-glass .prettify-divider {
   border-bottom-style: solid;
-  border-bottom-color: rgba(255, 255, 255, 0.45);
+  border-bottom-color: color-mix(in srgb, var(--anki-surface-border-strong) 66%, transparent 34%);
   border-bottom-width: 1px;
 }
 .theme-apple-glass table {
@@ -743,7 +809,7 @@ body.night_mode .theme-starfield-minimal::before {
   position: absolute;
   inset: 2px;
   border-radius: inherit;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.25));
+  background: linear-gradient(145deg, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 75%, transparent 25%), color-mix(in srgb, var(--anki-surface-glass) 35%, transparent 65%));
   opacity: 0.65;
   transition: opacity 0.25s ease;
   pointer-events: none;
@@ -752,29 +818,29 @@ body.night_mode .theme-starfield-minimal::before {
   opacity: 0.85;
 }
 body.night_mode .theme-apple-glass {
-  --theme-card-background: rgba(18, 20, 28, 0.55);
-  --theme-card-border-color: rgba(255, 255, 255, 0.12);
-  --theme-card-shadow: 0 28px 46px rgba(3, 6, 12, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --theme-table-bg: rgba(18, 20, 28, 0.55);
-  --theme-table-border-color: rgba(255, 255, 255, 0.14);
-  --theme-table-header-bg: rgba(255, 255, 255, 0.18);
-  --theme-table-cell-border: rgba(255, 255, 255, 0.14);
-  --theme-button-bg: rgba(255, 255, 255, 0.22);
-  --theme-button-bg-hover: rgba(255, 255, 255, 0.3);
-  --theme-button-border-color: rgba(255, 255, 255, 0.26);
-  --theme-button-color: rgba(235, 240, 255, 0.92);
+  --theme-card-background: color-mix(in srgb, var(--anki-surface-glass) 82%, transparent 18%);
+  --theme-card-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 70%, transparent 30%);
+  --theme-card-shadow: 0 28px 46px color-mix(in srgb, var(--anki-palette-base, #050b16) 42%, transparent), 0 0 0 1px color-mix(in srgb, var(--anki-surface-border-subtle) 65%, transparent 35%);
+  --theme-table-bg: color-mix(in srgb, var(--anki-surface-glass) 60%, transparent 40%);
+  --theme-table-border-color: color-mix(in srgb, var(--anki-surface-border-subtle) 68%, transparent 32%);
+  --theme-table-header-bg: color-mix(in srgb, var(--anki-surface-button) 60%, transparent 40%);
+  --theme-table-cell-border: color-mix(in srgb, var(--anki-surface-border-subtle) 70%, transparent 30%);
+  --theme-button-bg: color-mix(in srgb, var(--anki-surface-button) 62%, transparent 38%);
+  --theme-button-bg-hover: color-mix(in srgb, var(--anki-surface-button-strong) 74%, transparent 26%);
+  --theme-button-border-color: color-mix(in srgb, var(--anki-surface-border-strong) 68%, transparent 32%);
+  --theme-button-color: color-mix(in srgb, var(--text-primary) 92%, #ffffff 8%);
 }
 body.night_mode .theme-apple-glass::before {
   background:
-    radial-gradient(40% 55% at 20% 20%, rgba(255, 255, 255, 0.35), transparent 75%),
-    radial-gradient(55% 60% at 80% 28%, rgba(150, 206, 255, 0.28), transparent 80%),
-    radial-gradient(55% 70% at 50% 82%, rgba(255, 180, 240, 0.22), transparent 78%);
+    radial-gradient(40% 55% at 20% 20%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 35%, transparent 65%), transparent 75%),
+    radial-gradient(55% 60% at 80% 28%, color-mix(in srgb, var(--anki-surface-button-strong) 42%, transparent 58%), transparent 80%),
+    radial-gradient(55% 70% at 50% 82%, color-mix(in srgb, var(--anki-surface-button) 32%, transparent 68%), transparent 78%);
   filter: blur(20px);
 }
 body.night_mode .theme-apple-glass::after {
   background:
-    conic-gradient(from 200deg at 50% 12%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 70%),
-    radial-gradient(30% 85% at 48% -5%, rgba(255, 255, 255, 0.35), transparent 70%);
+    conic-gradient(from 200deg at 50% 12%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 45%, transparent 55%), transparent 70%),
+    radial-gradient(30% 85% at 48% -5%, color-mix(in srgb, var(--anki-palette-glow, #ffffff) 32%, transparent 68%), transparent 70%);
   opacity: 0.65;
 }
 /* === END NEW THEME === */
@@ -968,24 +1034,6 @@ body.night_mode u {
 .is-windows body {
   overflow: auto !important;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--anki-background-overlay, transparent);
-  z-index: -1;
-}
-body:not(.night_mode) {
-  --anki-background-image: var(--anki-background-image-light, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)));
-  --anki-background-color: var(--anki-background-color-light, #f0f5ff);
-}
-body.night_mode {
-  --anki-background-image: var(--anki-background-image-dark, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-dark, rgba(4, 10, 24, 0.45));
-  --anki-background-color: var(--anki-background-color-dark, #03060f);
-}
 
 /* Ensure the review container is never left hidden */
 .is-windows #qa {
@@ -1008,24 +1056,6 @@ body.night_mode {
    Prefer a scrolling background on Windows to keep the layer stable. */
 .is-windows body {
   background-attachment: scroll !important;
-}
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: var(--anki-background-overlay, transparent);
-  z-index: -1;
-}
-body:not(.night_mode) {
-  --anki-background-image: var(--anki-background-image-light, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-light, linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)));
-  --anki-background-color: var(--anki-background-color-light, #f0f5ff);
-}
-body.night_mode {
-  --anki-background-image: var(--anki-background-image-dark, url('starsky.jpeg'));
-  --anki-background-overlay: var(--anki-background-overlay-dark, rgba(4, 10, 24, 0.45));
-  --anki-background-color: var(--anki-background-color-dark, #03060f);
 }
 
 /* When using heavy glass skins, give text a tiny edge for busy wallpapers */
