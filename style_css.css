@@ -46,11 +46,8 @@ I.   COLOR PALETTE
   --anki-background-color-dark: #03060f;
   --anki-background-image-light: url('starsky.jpeg');
   --anki-background-image-dark: url('starsky.jpeg');
-  --anki-background-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
-  --anki-background-overlay-dark: linear-gradient(180deg, rgba(4, 10, 24, 0.6), rgba(4, 10, 24, 0.35));
-  --anki-card-overlay: transparent;
-  --anki-card-overlay-light: var(--anki-background-overlay-light);
-  --anki-card-overlay-dark: var(--anki-background-overlay-dark);
+  --anki-background-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
+  --anki-background-overlay-dark: rgba(4, 10, 24, 0.45);
 
   /* Palette fallback (runtime values provided by anking-shared.js) */
   --p-hue-bg: 200;
@@ -146,8 +143,8 @@ I.   COLOR PALETTE
   --theme-img-shadow-hover-night: 0 8px 25px hsla(0, 0%, 0%, 0.36);
 
   /* Surface tokens (light/dark variants supplied by body selectors) */
-  --anki-surface-glass: rgba(255, 255, 255, 0.28);
-  --anki-surface-glass-border: rgba(255, 255, 255, 0.5);
+  --anki-surface-glass: rgba(255, 255, 255, 0.12);
+  --anki-surface-glass-border: rgba(255, 255, 255, 0.22);
   --anki-surface-solid: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 6%), 0.9);
   --anki-surface-solid-strong: hsla(var(--p-hue-bg), var(--p-bg-s), calc(var(--p-bg-l) + 10%), 0.95);
   --anki-surface-border-subtle: hsla(var(--p-hue-bg), calc(var(--p-bg-s) - 12%), calc(var(--p-bg-l) - 10%), 0.28);
@@ -181,16 +178,16 @@ body:not(.night_mode) {
   --underline-fg: var(--p-underline-fg);
   --bold-italic-fg: var(--p-bold-italic-fg);
 
-  --anki-surface-glass: rgba(255, 255, 255, 0.34);
-  --anki-surface-glass-border: rgba(255, 255, 255, 0.58);
-  --anki-surface-solid: color-mix(in srgb, rgba(255, 255, 255, 0.94) 80%, var(--anki-palette-base, #10294a) 20%);
-  --anki-surface-solid-strong: color-mix(in srgb, rgba(255, 255, 255, 0.98) 74%, var(--anki-palette-base, #10294a) 26%);
-  --anki-surface-border-subtle: color-mix(in srgb, rgba(17, 33, 58, 0.18) 40%, rgba(255, 255, 255, 0.4) 60%);
-  --anki-surface-border-strong: color-mix(in srgb, rgba(255, 255, 255, 0.45) 50%, var(--anki-palette-accent, #7faeff) 50%);
-  --anki-surface-button: color-mix(in srgb, rgba(255, 255, 255, 0.9) 60%, var(--anki-palette-accent, #7faeff) 40%);
-  --anki-surface-button-strong: color-mix(in srgb, rgba(255, 255, 255, 0.85) 45%, var(--anki-palette-accent, #7faeff) 55%);
-  --anki-surface-shadow-glass: 0 16px 34px rgba(17, 33, 58, 0.18);
-  --anki-surface-shadow-solid: 0 20px 40px rgba(17, 33, 58, 0.22);
+  --anki-surface-glass: color-mix(in srgb, rgba(255, 255, 255, 0.94) 80%, var(--anki-palette-base, #10294a) 20%);
+  --anki-surface-glass-border: color-mix(in srgb, rgba(255, 255, 255, 0.65) 62%, var(--anki-palette-accent, #7faeff) 38%);
+  --anki-surface-solid: color-mix(in srgb, rgba(255, 255, 255, 0.96) 72%, var(--anki-palette-base, #10294a) 28%);
+  --anki-surface-solid-strong: color-mix(in srgb, rgba(255, 255, 255, 0.98) 68%, var(--anki-palette-base, #10294a) 32%);
+  --anki-surface-border-subtle: color-mix(in srgb, var(--anki-palette-base, #10294a) 22%, rgba(255, 255, 255, 0.4) 78%);
+  --anki-surface-border-strong: color-mix(in srgb, var(--anki-palette-accent, #7faeff) 58%, rgba(255, 255, 255, 0.32) 42%);
+  --anki-surface-button: color-mix(in srgb, rgba(255, 255, 255, 0.94) 52%, var(--anki-palette-accent, #7faeff) 48%);
+  --anki-surface-button-strong: color-mix(in srgb, rgba(255, 255, 255, 0.9) 38%, var(--anki-palette-accent, #7faeff) 62%);
+  --anki-surface-shadow-glass: 0 16px 34px color-mix(in srgb, var(--anki-palette-base, #10294a) 26%, transparent);
+  --anki-surface-shadow-solid: 0 20px 40px color-mix(in srgb, var(--anki-palette-base, #10294a) 30%, transparent);
 
   --theme-card-background: var(--anki-surface-solid);
   --theme-card-border-color: var(--anki-surface-border-subtle);
@@ -224,16 +221,16 @@ body.night_mode {
   --underline-fg: var(--p-underline-fg-dark);
   --bold-italic-fg: var(--p-bold-italic-fg-dark);
 
-  --anki-surface-glass: color-mix(in srgb, rgba(5, 12, 24, 0.78) 70%, rgba(255, 255, 255, 0.12) 30%);
-  --anki-surface-glass-border: color-mix(in srgb, rgba(100, 150, 255, 0.55) 60%, rgba(5, 12, 24, 0.3) 40%);
-  --anki-surface-solid: color-mix(in srgb, rgba(5, 12, 24, 0.92) 76%, rgba(255, 255, 255, 0.12) 24%);
-  --anki-surface-solid-strong: color-mix(in srgb, rgba(5, 12, 24, 0.95) 72%, rgba(255, 255, 255, 0.14) 28%);
-  --anki-surface-border-subtle: color-mix(in srgb, rgba(5, 12, 24, 0.78) 52%, rgba(125, 175, 255, 0.25) 48%);
-  --anki-surface-border-strong: color-mix(in srgb, rgba(8, 16, 32, 0.75) 45%, rgba(125, 175, 255, 0.45) 55%);
-  --anki-surface-button: color-mix(in srgb, rgba(6, 14, 28, 0.85) 52%, rgba(125, 175, 255, 0.48) 48%);
-  --anki-surface-button-strong: color-mix(in srgb, rgba(8, 16, 32, 0.78) 48%, rgba(125, 175, 255, 0.58) 52%);
-  --anki-surface-shadow-glass: 0 18px 40px rgba(3, 8, 18, 0.55);
-  --anki-surface-shadow-solid: 0 22px 46px rgba(0, 0, 0, 0.62);
+  --anki-surface-glass: color-mix(in srgb, var(--anki-palette-base, #050b16) 82%, rgba(8, 12, 20, 0.9) 18%);
+  --anki-surface-glass-border: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 52%, rgba(255, 255, 255, 0.18) 48%);
+  --anki-surface-solid: color-mix(in srgb, var(--anki-palette-base, #050b16) 88%, rgba(9, 14, 24, 0.82) 12%);
+  --anki-surface-solid-strong: color-mix(in srgb, var(--anki-palette-base, #050b16) 92%, rgba(255, 255, 255, 0.06) 8%);
+  --anki-surface-border-subtle: color-mix(in srgb, var(--anki-palette-base, #050b16) 70%, rgba(255, 255, 255, 0.1) 30%);
+  --anki-surface-border-strong: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 68%, rgba(255, 255, 255, 0.22) 32%);
+  --anki-surface-button: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 62%, rgba(255, 255, 255, 0.08) 38%);
+  --anki-surface-button-strong: color-mix(in srgb, var(--anki-palette-accent, #7dafff) 74%, rgba(255, 255, 255, 0.12) 26%);
+  --anki-surface-shadow-glass: 0 18px 40px color-mix(in srgb, var(--anki-palette-base, #050b16) 45%, transparent);
+  --anki-surface-shadow-solid: 0 22px 46px color-mix(in srgb, var(--anki-palette-base, #050b16) 52%, transparent);
 
   --theme-card-background: var(--anki-surface-solid);
   --theme-card-border-color: var(--anki-surface-border-subtle);

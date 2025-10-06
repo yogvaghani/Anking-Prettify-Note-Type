@@ -51,10 +51,9 @@
     const backgroundValue = mode === 'dark' ? backgrounds.dark : backgrounds.light;
     setVar('--anki-background-image', toCssBackground(backgroundValue));
     setVar('--anki-background-color', palette.base.hex);
-    const overlayValue = normalizeOverlay(palette.overlay || (mode === 'dark'
-      ? 'linear-gradient(180deg, rgba(4, 10, 24, 0.6), rgba(4, 10, 24, 0.35))'
-      : 'linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0))'));
-    setVar('--anki-card-overlay', overlayValue);
+    const overlayValue = palette.overlay || (mode === 'dark'
+      ? 'rgba(4, 10, 24, 0.45)'
+      : 'linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0))');
     setVar('--anki-background-overlay', overlayValue);
     updateBaseVariables(palette, mode);
     setVar('--anki-palette-base', palette.base.hex);
@@ -117,17 +116,6 @@
     return { light: backgrounds.light, dark: backgrounds.dark };
   };
 
-  function normalizeOverlay(value) {
-    if (!value) {
-      return 'transparent';
-    }
-    const token = String(value).trim();
-    if (/^(?:linear|radial|conic)-gradient|^url\(/i.test(token)) {
-      return token;
-    }
-    return `linear-gradient(0deg, ${token}, ${token})`;
-  }
-
   function buildPalette(entry) {
     const base = parseColor(entry.base, '#ffffff');
     const accent = parseColor(entry.accent, '#4d8bff');
@@ -173,17 +161,9 @@
     setVar('--anki-background-color-dark', paletteDark.base.hex);
     if (paletteLight.overlay) {
       setVar('--anki-background-overlay-light', paletteLight.overlay);
-      setVar('--anki-card-overlay-light', paletteLight.overlay);
-    } else {
-      setVar('--anki-background-overlay-light', 'transparent');
-      setVar('--anki-card-overlay-light', 'transparent');
     }
     if (paletteDark.overlay) {
       setVar('--anki-background-overlay-dark', paletteDark.overlay);
-      setVar('--anki-card-overlay-dark', paletteDark.overlay);
-    } else {
-      setVar('--anki-background-overlay-dark', 'transparent');
-      setVar('--anki-card-overlay-dark', 'transparent');
     }
     setVar('--anki-background-image-light', toCssBackground(backgrounds.light));
     setVar('--anki-background-image-dark', toCssBackground(backgrounds.dark));
@@ -207,7 +187,7 @@
       if (derived.accent) target.accent = derived.accent;
       if (derived.text) target.text = derived.text;
       if (derived.glow) target.glow = derived.glow;
-      if (derived.overlay) target.overlay = normalizeOverlay(derived.overlay);
+      if (derived.overlay) target.overlay = derived.overlay;
       updatePaletteStatics();
       if (document.body) {
         applyPalette();
